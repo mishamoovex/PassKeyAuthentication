@@ -1,6 +1,5 @@
 
 android {
-    namespace = "com.aksio.authentication"
     compileSdk = libs.versions.gradle.compile.sdk.get().toInteger()
 
     defaultConfig {

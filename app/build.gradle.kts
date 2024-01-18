@@ -13,6 +13,7 @@ android {
     namespace = "com.aksio.authentication"
 
     defaultConfig {
+        targetSdk = libs.versions.gradle.target.sdk.get().toInt()
         applicationId = "com.aksio.authentication"
         versionCode = 1
         versionName = "1.0"
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":features:authentication"))
 
     implementation(libs.splash.screen)
     implementation(libs.lifecycle.vm)
