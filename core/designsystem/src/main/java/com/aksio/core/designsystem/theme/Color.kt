@@ -31,7 +31,8 @@ data class CustomThemeColors(
     val surfacePrimary: Color,
     val surfaceSecondary: Color,
 
-    val background: Color
+    val background: Color,
+    val stroke: Color
 )
 
 private val Progress1 = Color(0xff757575)
@@ -68,7 +69,8 @@ internal val LightColorPalette = CustomThemeColors(
 
     surfacePrimary = Surface,
     surfaceSecondary = Surface,
-    background = Background
+    background = Background,
+    stroke = BlueDark
 )
 
 internal val TextSelectionsColors = TextSelectionColors(

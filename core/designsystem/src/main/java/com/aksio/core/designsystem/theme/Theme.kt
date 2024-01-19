@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 
 @Composable
-fun AuthenticationTheme(
+fun AppTheme(
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(LocalCustomColors provides LightColorPalette) {
