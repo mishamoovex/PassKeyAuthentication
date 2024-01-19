@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    kotlin("kapt")
 }
 
 apply(from = "$rootDir/gradle/common-feature.gradle")
@@ -39,7 +40,10 @@ dependencies {
     implementation(project(":features:authentication"))
 
     implementation(libs.splash.screen)
-    implementation(libs.lifecycle.vm)
-    //Compose
     implementation(libs.compose.activity)
+}
+
+// Code generation for Hilt
+kapt {
+    correctErrorTypes = true
 }
