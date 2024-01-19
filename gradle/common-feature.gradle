@@ -1,4 +1,3 @@
-apply plugin: libs.plugins.androidLibrary.get().pluginId
 apply from: "$rootDir/gradle/common-android.gradle"
 
 android {

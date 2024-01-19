@@ -28,7 +28,7 @@ lifecycle-vm = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx",
 splash-screen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash-screen" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
+hilt-navigatin-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -37,5 +37,5 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [bundles]
-compose = ["compose-ui", "compose-graphics", "compose-tooling-preview", "compose-material3", "compose-lifecycle", "compose-navigation"]
+compose = ["compose-ui", "compose-graphics", "compose-tooling-preview", "compose-material3", "compose-lifecycle", "compose-navigation", "hilt-navigatin-compose"]
 

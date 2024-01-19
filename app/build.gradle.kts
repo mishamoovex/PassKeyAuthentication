@@ -1,13 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
 }
 
-apply {
-    from("$rootDir/feature.gradle")
-}
+apply(from = "$rootDir/gradle/common-feature.gradle")
 
 android {
     namespace = "com.aksio.authentication"
@@ -45,19 +40,6 @@ dependencies {
 
     implementation(libs.splash.screen)
     implementation(libs.lifecycle.vm)
-    //Hilt
-    implementation(libs.hilt)
-    implementation(libs.hilt.navigation)
-    kapt(libs.hilt.compiler)
     //Compose
     implementation(libs.compose.activity)
-    implementation(platform(libs.compose.bom))
-    androidTestImplementation(platform(libs.compose.bom))
-    debugImplementation(libs.compose.tooling)
-    implementation(libs.bundles.compose)
-}
-
-// Code generation for Hilt
-kapt {
-    correctErrorTypes = true
 }
