@@ -1,0 +1,20 @@
+apply plugin: libs.plugins.androidLibrary.get().pluginId
+apply from: "$rootDir/gradle/common-android.gradle"
+
+android {
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiller.get()
+    }
+}
+
+dependencies {
+    //compose
+    def composeBom = platform(libs.compose.bom)
+    implementation composeBom
+    androidTestImplementation composeBom
+    debugImplementation libs.compose.tooling
+    implementation libs.bundles.compose
+}

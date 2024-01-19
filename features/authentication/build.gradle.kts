@@ -1,11 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
 }
 
-apply {
-    from("$rootDir/feature.gradle")
-}
+apply(from = "$rootDir/gradle/common-feature.gradle")
 
 android {
     namespace = "com.aksio.features.authentication"
@@ -13,8 +10,4 @@ android {
     defaultConfig {
         consumerProguardFiles("consumer-rules.pro")
     }
-}
-
-dependencies {
-
 }
