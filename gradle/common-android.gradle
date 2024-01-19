@@ -1,0 +1,24 @@
+apply plugin: libs.plugins.kotlinAndroid.get().pluginId
+apply plugin: libs.plugins.hilt.get().pluginId
+apply plugin: "kotlin-kapt"
+
+android {
+    compileSdk = libs.versions.gradle.compile.sdk.get().toInteger()
+
+    defaultConfig {
+        minSdk = libs.versions.gradle.min.sdk.get().toInteger()
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = libs.versions.kotlin.options.get()
+    }
+}
+
+dependencies {
+    implementation libs.hilt
+    kapt libs.hilt.compiler
+}
