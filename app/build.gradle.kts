@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:designsystem"))
     implementation(project(":features:authentication"))
 
     implementation(libs.splash.screen)
