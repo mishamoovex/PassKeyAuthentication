@@ -1,8 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":core:data:store")
-
-
 pluginManagement {
     repositories {
         google()
@@ -23,5 +20,7 @@ rootProject.name = "Authentication"
 include(":app")
 include(":core:designsystem")
 include(":core:repository:authentication")
+include(":core:data:store")
+include(":core:data:firebase:auth")
 include(":features:authentication")
  
