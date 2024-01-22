@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
     kotlin("kapt")
 }
 
@@ -45,6 +46,7 @@ dependencies {
     implementation(libs.splash.screen)
     implementation(libs.compose.activity)
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 }
 
 // Code generation for Hilt
