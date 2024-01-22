@@ -18,5 +18,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Authentication"
 include(":app")
+include(":core:designsystem")
 include(":features:authentication")
  
