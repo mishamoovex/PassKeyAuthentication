@@ -23,4 +23,5 @@ include(":core:repository:authentication")
 include(":core:data:store")
 include(":core:data:firebase:auth")
 include(":features:authentication")
+include(":features:home")
  

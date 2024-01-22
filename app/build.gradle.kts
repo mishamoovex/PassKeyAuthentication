@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:repository:authentication"))
     implementation(project(":features:authentication"))
+    implementation(project(":features:home"))
 
     implementation(libs.splash.screen)
     implementation(libs.compose.activity)
