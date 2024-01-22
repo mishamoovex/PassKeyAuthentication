@@ -16,4 +16,5 @@ dependencies {
     androidTestImplementation composeBom
     debugImplementation libs.compose.tooling
     implementation libs.bundles.compose
+    implementation libs.android.lifecycle.vm
 }

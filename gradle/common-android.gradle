@@ -1,4 +1,4 @@
-apply plugin: libs.plugins.kotlinAndroid.get().pluginId
+apply plugin: libs.plugins.kotlin.android.get().pluginId
 apply plugin: libs.plugins.hilt.get().pluginId
 apply plugin: "kotlin-kapt"
 

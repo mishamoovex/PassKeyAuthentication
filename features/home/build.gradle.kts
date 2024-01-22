@@ -5,7 +5,7 @@ plugins {
 apply(from = "$rootDir/gradle/common-feature.gradle")
 
 android {
-    namespace = "com.aksio.features.authentication"
+    namespace = "com.aksio.features.home"
 }
 
 dependencies {
