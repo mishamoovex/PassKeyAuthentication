@@ -42,5 +42,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [bundles]
-compose = ["compose-ui", "compose-graphics", "compose-tooling-preview", "compose-material3", "compose-lifecycle", "compose-navigation", "compose-navigation-hilt"]
+compose = ["compose-ui", "compose-graphics", "compose-tooling", "compose-tooling-preview", "compose-material3", "compose-lifecycle", "compose-navigation", "compose-navigation-hilt"]
 
