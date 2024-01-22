@@ -11,7 +11,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/data" />
+            <option value="$PROJECT_DIR$/core/data/store" />
             <option value="$PROJECT_DIR$/core/designsystem" />
+            <option value="$PROJECT_DIR$/core/repository" />
+            <option value="$PROJECT_DIR$/core/repository/authentication" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/authentication" />
           </set>

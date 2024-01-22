@@ -5,9 +5,10 @@ plugins {
 apply(from = "$rootDir/gradle/common-android.gradle")
 
 android {
-    namespace = "com.aksio.core.repository.authentication"
+    namespace = "com.aksio.core.data.store"
 }
 
 dependencies {
-    implementation(project(":core:data:store"))
+    implementation(libs.kotlin.serialization)
+    implementation(libs.android.store)
 }

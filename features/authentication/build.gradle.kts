@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.android.library)
 }
 
 apply(from = "$rootDir/gradle/common-feature.gradle")
