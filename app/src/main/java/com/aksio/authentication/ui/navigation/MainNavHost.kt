@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.aksio.core.common.state.SnackbarMessage
+import com.aksio.features.authentication.ui.navigation.navGraphAuthentication
 
 @Composable
 internal fun MainNavHost(
@@ -18,6 +19,9 @@ internal fun MainNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-
+        navGraphAuthentication(
+            graphRoute = MainGraph.Authentication.route,
+            showMessage = showMessage
+        )
     }
 }
