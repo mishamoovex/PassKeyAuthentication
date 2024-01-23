@@ -1,4 +1,4 @@
-package com.aksio.authentication
+package com.aksio.authentication.ui.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,10 +15,12 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.aksio.core.designsystem.theme.AppTheme
 import com.aksio.features.authentication.WelcomeScreen
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val isSplashActive = AtomicBoolean(true)
