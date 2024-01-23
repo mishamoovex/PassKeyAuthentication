@@ -9,6 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.aksio.core.common.state.SnackbarMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,14 +29,16 @@ fun rememberResources(): Resources {
 internal fun rememberMainScreenState(
     resources: Resources = rememberResources(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope()
-) = remember(resources, coroutineScope) {
-    MainScreenState(snackbarHostState, resources, coroutineScope)
+) = remember(resources, navController, coroutineScope) {
+    MainScreenState(snackbarHostState, navController, resources, coroutineScope)
 }
 
 @Stable
 internal class MainScreenState(
     val snackbarHostState: SnackbarHostState,
+    val navController: NavHostController,
     private val resources: Resources,
     private val coroutineScope: CoroutineScope,
 ) {

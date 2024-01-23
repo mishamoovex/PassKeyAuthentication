@@ -3,21 +3,13 @@ package com.aksio.authentication.ui.screen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.lifecycleScope
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aksio.core.designsystem.theme.AppTheme
-import com.aksio.features.authentication.WelcomeScreen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 @AndroidEntryPoint
@@ -30,37 +22,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition { isSplashActive.get() }
 
-        lifecycleScope.launch {
-            delay(300)
-            isSplashActive.set(false)
-        }
-
         setContent {
+            val viewModel = hiltViewModel<MainScreenVm>()
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val messageState by viewModel.messageEvent.collectAsStateWithLifecycle()
+
             AppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                    WelcomeScreen()
-                }
+                MainScreen(
+                    uiState = uiState,
+                    messageState = messageState,
+                    hideSplashScreen = { isSplashActive.set(false) }
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AppTheme {
-        Greeting("Android")
     }
 }

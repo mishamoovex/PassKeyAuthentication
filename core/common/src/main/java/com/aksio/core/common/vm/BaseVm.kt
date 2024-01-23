@@ -2,7 +2,7 @@ package com.aksio.core.common.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aksio.core.common.state.NavigationState
+import com.aksio.core.common.state.MessageState
 import com.aksio.core.common.state.SnackbarMessage
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,16 +28,15 @@ abstract class BaseVm(
     protected val executionScope = viewModelScope + coroutineErrorHandler
 
     private val messageChannel = MutableStateFlow(
-        NavigationState<SnackbarMessage>(
-            event = null,
-            onNavigated = { setMessage(null) }
+        MessageState(
+            onShown = { setMessage(null) }
         )
     )
     val messageEvent = messageChannel.asStateFlow()
 
     fun setMessage(message: SnackbarMessage?) {
         messageChannel.update {
-            it.copy(event = message)
+            it.copy(message = message)
         }
     }
 
