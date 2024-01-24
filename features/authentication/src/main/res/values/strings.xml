@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_screen_header">Let\'s get started</string>
+    <string name="welcome_screen_main_action_title">Continue with Passkey</string>
+    <string name="welcome_screen_secondary_action_title">Other options</string>
+    <string name="privacy_text">By continuing you agree to our\n<annotation link="terms">Terms and Conditions</annotation> and <annotation link="policy">Privacy Policy</annotation></string>
+
+</resources>

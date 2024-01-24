@@ -14,68 +14,77 @@ import androidx.compose.ui.graphics.Color
 @Immutable
 data class CustomThemeColors(
     val buttonPrimary: Color,
+    val onPrimaryButton: Color,
+    val onPrimaryButtonDisabled: Color,
     val buttonSecondary: Color,
+    val onSecondaryButton: Color,
+    val onSecondaryButtonDisabled: Color,
     val buttonDisabled: Color,
 
-    val textPrimary: Color,
-    val textSecondary: Color,
-    val textOnButton: Color,
-    val textError: Color,
-    val textHint: Color,
-    val textLink: Color,
+    val textHilt: Color,
+    val textHintFocused: Color,
+
+    val textIndicator: Color,
+    val textIndicatorFocused: Color,
 
     val progressStatic: Color,
     val progressDynamic: Color,
     val progressBackground: Color,
 
-    val surfacePrimary: Color,
-    val surfaceSecondary: Color,
-
+    val surface: Color,
     val background: Color,
-    val stroke: Color
+    val error: Color
 )
 
-private val Progress1 = Color(0xff757575)
-private val Progress2 = Color(0xffEEEEEE)
-private val Progress3 = Color(0xFFEFEFEF)
+internal val Progress1 = Color(0xff757575)
+internal val Progress2 = Color(0xffEEEEEE)
+internal val Progress3 = Color(0xFFEFEFEF)
 
-private val Background = Color(0xFFF9F8F7)
-private val Surface = Color(0xFFFDFDFD)
+internal val White = Color(0xFFE7E7E7)
+internal val G100 = Color(0xFF9D9D9D)
+internal val G200 = Color(0xFF747474)
+internal val G300 = Color(0xFF393939)
+internal val G400 = Color(0xFF131313)
+internal val G500 = Color(0xFF0C0C0C)
+internal val Black = Color(0xFF070707)
 
-private val TextPrimary = Color(0xFF243565)
-private val TextSecondary = Color(0xFF989FB1)
+internal val YellowLight = Color(0xFFF9DB6A)
+internal val Yellow = Color(0xFFF8D44C)
+internal val YellowDark = Color(0xFFAE9435)
 
-private val Green = Color(0xFF16CA7F)
-private val Yellow = Color(0xFFFFB336)
-private val Blue = Color(0xFFA3C6FF)
-private val BlueDark = Color(0xFF384BF8)
-private val Red = Color(0xFFFE8157)
+internal val OrangeLight = Color(0xFFEE8671)
+internal val Orange = Color(0xFFEB6D54)
+
+internal val Red = Color(0xFFE3262F)
+
 
 internal val LightColorPalette = CustomThemeColors(
-    buttonPrimary = Green,
-    buttonSecondary = Yellow,
-    buttonDisabled = Progress3,
+    buttonPrimary = Yellow,
+    onPrimaryButton = Black,
+    onPrimaryButtonDisabled = G100,
+    buttonSecondary = Black,
+    onSecondaryButton = Yellow,
+    onSecondaryButtonDisabled = G200,
+    buttonDisabled = G300,
 
-    textPrimary = TextPrimary,
-    textSecondary = TextSecondary,
-    textHint = TextSecondary,
-    textOnButton = Color.White,
-    textError = Red,
-    textLink = BlueDark,
+    textHilt = G200,
+    textHintFocused = G300,
+
+    textIndicator = G200,
+    textIndicatorFocused = Yellow,
 
     progressStatic = Progress1,
     progressDynamic = Progress2,
     progressBackground = Progress3,
 
-    surfacePrimary = Surface,
-    surfaceSecondary = Surface,
-    background = Background,
-    stroke = BlueDark
+    surface = G500,
+    background = Black,
+    error = Red
 )
 
 internal val TextSelectionsColors = TextSelectionColors(
-    handleColor = Blue,
-    backgroundColor = Blue
+    handleColor = YellowLight,
+    backgroundColor = YellowLight
 )
 
 
@@ -84,13 +93,13 @@ internal object AppRippleTheme : RippleTheme {
 
     @Composable
     override fun defaultColor(): Color = RippleTheme.defaultRippleColor(
-        contentColor = Blue,
+        contentColor = YellowLight,
         lightTheme = !isSystemInDarkTheme()
     )
 
     @Composable
     override fun rippleAlpha(): RippleAlpha = RippleTheme.defaultRippleAlpha(
-        contentColor = Blue,
+        contentColor = YellowLight,
         lightTheme = !isSystemInDarkTheme()
     )
 }

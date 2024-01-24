@@ -19,6 +19,7 @@ dependencyResolutionManagement {
 rootProject.name = "Authentication"
 include(":app")
 include(":core:designsystem")
+include(":core:common")
 include(":core:repository:authentication")
 include(":core:data:store")
 include(":core:data:firebase:auth")
