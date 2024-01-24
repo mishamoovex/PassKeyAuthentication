@@ -3,7 +3,6 @@ package com.aksio.core.designsystem.theme
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 
@@ -11,10 +10,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 fun AppTheme(
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalCustomColors provides LightColorPalette) {
+    CompositionLocalProvider(
+        LocalCustomColors provides LightColorPalette,
+        LocalCustomTypography provides Typography
+    ) {
         MaterialTheme(
-            colorScheme = debugColors(),
-            typography = Typography
+            colorScheme = debugColors()
         ) {
             CompositionLocalProvider(
                 LocalTextSelectionColors provides TextSelectionsColors,
@@ -30,6 +31,6 @@ object AppTheme {
     val colors: CustomThemeColors
         @Composable get() = LocalCustomColors.current
 
-    val typography: Typography
-        @Composable get() = MaterialTheme.typography
+    val typography: CustomTypography
+        @Composable get() = LocalCustomTypography.current
 }

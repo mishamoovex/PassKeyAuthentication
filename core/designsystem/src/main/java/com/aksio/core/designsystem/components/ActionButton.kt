@@ -32,9 +32,9 @@ private fun ActionButton(
     shape: Shape = RoundedCornerShape(16.dp),
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = AppTheme.colors.buttonPrimary,
-        contentColor = AppTheme.colors.textOnButton,
+        contentColor = AppTheme.colors.onPrimaryButton,
         disabledContainerColor = AppTheme.colors.buttonDisabled,
-        disabledContentColor = AppTheme.colors.textPrimary
+        disabledContentColor = AppTheme.colors.onPrimaryButtonDisabled
     ),
     content: @Composable () -> Unit
 ) {
@@ -49,7 +49,7 @@ private fun ActionButton(
         colors = colors,
         modifier = modifier
             .width(250.dp)
-            .height(48.dp),
+            .height(56.dp),
         border = border
     ) {
 
@@ -84,12 +84,12 @@ fun TextActionButton(
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = AppTheme.colors.buttonPrimary,
-        contentColor = AppTheme.colors.textOnButton,
+        contentColor = AppTheme.colors.onPrimaryButton,
         disabledContainerColor = AppTheme.colors.buttonDisabled,
-        disabledContentColor = AppTheme.colors.textPrimary
+        disabledContentColor = AppTheme.colors.onPrimaryButtonDisabled
     ),
     shape: Shape = RoundedCornerShape(50),
-    textStyle: TextStyle = AppTheme.typography.bodyMedium
+    textStyle: TextStyle = AppTheme.typography.button
 ) {
     ActionButton(
         onClick,
@@ -116,13 +116,13 @@ fun OutlinedActionButton(
     isLoading: Boolean = false,
     border: BorderStroke? = BorderStroke(
         width = 1.dp,
-        color = AppTheme.colors.stroke
+        color = AppTheme.colors.buttonPrimary
     ),
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(
         containerColor = AppTheme.colors.background,
-        disabledContainerColor = AppTheme.colors.buttonDisabled,
-        contentColor = AppTheme.colors.textPrimary,
-        disabledContentColor = AppTheme.colors.textPrimary,
+        disabledContainerColor = AppTheme.colors.background,
+        contentColor = AppTheme.colors.onSecondaryButton,
+        disabledContentColor = AppTheme.colors.onSecondaryButtonDisabled,
     )
 ) {
     TextActionButton(

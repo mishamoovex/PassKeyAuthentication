@@ -6,7 +6,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.aksio.core.designsystem.theme.AppTheme
 
 @Composable
@@ -15,8 +14,8 @@ fun AppSnackbarHost(hostState: SnackbarHostState) {
         Snackbar(
             snackbarData = snackbarData,
             modifier = Modifier.systemBarsPadding(),
-            containerColor = Color.DarkGray,
-            contentColor = AppTheme.colors.textOnButton,
+            containerColor = AppTheme.colors.buttonDisabled,
+            contentColor = AppTheme.colors.onSecondaryButton,
         )
     }
 }
