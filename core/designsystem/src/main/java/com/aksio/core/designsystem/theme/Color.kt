@@ -21,12 +21,19 @@ data class CustomThemeColors(
     val onSecondaryButtonDisabled: Color,
     val buttonDisabled: Color,
 
+    val textHilt: Color,
+    val textHintFocused: Color,
+
+    val textIndicator: Color,
+    val textIndicatorFocused: Color,
+
     val progressStatic: Color,
     val progressDynamic: Color,
     val progressBackground: Color,
 
     val surface: Color,
-    val background: Color
+    val background: Color,
+    val error: Color
 )
 
 internal val Progress1 = Color(0xff757575)
@@ -44,7 +51,6 @@ internal val Black = Color(0xFF070707)
 internal val YellowLight = Color(0xFFF9DB6A)
 internal val Yellow = Color(0xFFF8D44C)
 internal val YellowDark = Color(0xFFAE9435)
-internal val YellowTransparent12 = Color(0xFFF9DB6A)
 
 internal val OrangeLight = Color(0xFFEE8671)
 internal val Orange = Color(0xFFEB6D54)
@@ -61,17 +67,24 @@ internal val LightColorPalette = CustomThemeColors(
     onSecondaryButtonDisabled = G200,
     buttonDisabled = G300,
 
+    textHilt = G200,
+    textHintFocused = G300,
+
+    textIndicator = G200,
+    textIndicatorFocused = Yellow,
+
     progressStatic = Progress1,
     progressDynamic = Progress2,
     progressBackground = Progress3,
 
     surface = G500,
-    background = Black
+    background = Black,
+    error = Red
 )
 
 internal val TextSelectionsColors = TextSelectionColors(
-    handleColor = OrangeLight,
-    backgroundColor = OrangeLight
+    handleColor = YellowLight,
+    backgroundColor = YellowLight
 )
 
 
@@ -80,13 +93,13 @@ internal object AppRippleTheme : RippleTheme {
 
     @Composable
     override fun defaultColor(): Color = RippleTheme.defaultRippleColor(
-        contentColor = OrangeLight,
+        contentColor = YellowLight,
         lightTheme = !isSystemInDarkTheme()
     )
 
     @Composable
     override fun rippleAlpha(): RippleAlpha = RippleTheme.defaultRippleAlpha(
-        contentColor = OrangeLight,
+        contentColor = YellowLight,
         lightTheme = !isSystemInDarkTheme()
     )
 }

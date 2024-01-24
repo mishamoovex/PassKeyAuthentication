@@ -16,6 +16,7 @@ data class CustomTypography(
     val bodyL: TextStyle,
     val bodyM: TextStyle,
     val bodyS: TextStyle,
+    val bodyXs: TextStyle,
     val button: TextStyle
 )
 
@@ -39,6 +40,12 @@ internal val Typography = CustomTypography(
         color = G100,
         fontFamily = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium)),
         fontSize = 14.sp
+    ),
+    bodyXs = TextStyle(
+        color = G100,
+        fontFamily = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium)),
+        fontSize = 12.sp,
+        letterSpacing = 0.94.sp
     ),
     button = TextStyle(
         fontFamily = FontFamily(Font(R.font.montserrat_bold, FontWeight.Bold)),

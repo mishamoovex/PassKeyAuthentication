@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -48,7 +49,7 @@ private fun ActionButton(
         shape = shape,
         colors = colors,
         modifier = modifier
-            .width(250.dp)
+            .fillMaxWidth()
             .height(56.dp),
         border = border
     ) {
