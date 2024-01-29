@@ -3,7 +3,7 @@ package com.aksio.features.authentication.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.aksio.core.common.state.SnackbarMessage
+import com.aksio.core.common.state.TextMessage
 import com.aksio.features.authentication.ui.email.resigter.screen.EmailSignUpScreen
 import com.aksio.features.authentication.ui.welcome.screen.WelcomeScreen
 
@@ -15,7 +15,7 @@ private sealed class AuthNavGraph(open val route: String) {
 
 fun NavGraphBuilder.navGraphAuthentication(
     graphRoute: String,
-    showMessage: (SnackbarMessage) -> Unit
+    showMessage: (TextMessage) -> Unit
 ) {
     navigation(
         startDestination = AuthNavGraph.SingUp.route,

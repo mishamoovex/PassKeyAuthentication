@@ -1,26 +1,40 @@
 package com.aksio.features.authentication.domain.password
 
+import com.aksio.core.common.state.TextMessage
+import com.aksio.features.authentication.R
 import javax.inject.Inject
 
 class ValidatePasswordUseCaseImpl @Inject constructor() : ValidatePasswordUseCase {
 
-    private companion object {
-        const val PASSWORD_LENGTH = 6
-    }
+    override suspend fun invoke(password: String, length: Int): TextMessage? {
+        if (password.isEmpty() && password.isBlank()) return TextMessage.ResourceMessage(
+            templateRes = R.string.text_validation_error_password_empty
+        )
+        if (password.length > length) return TextMessage.ResourceMessage(
+            templateRes = R.string.text_validation_error_password_too_long
+        )
 
-    override suspend fun invoke(password: String): List<PasswordValidationError> {
-        if (password.isEmpty() && password.isBlank()) return listOf(PasswordValidationError.EMPTY)
-        if (password.length > PASSWORD_LENGTH) return listOf(PasswordValidationError.TOO_LONG)
-        return charactersValidation(password)
-    }
+        val charValidation = charactersValidation(password)
 
-    private fun charactersValidation(password: String): List<PasswordValidationError> {
-        val errors = mutableListOf<PasswordValidationError>()
-        if (!password.hasDigits()) errors.add(PasswordValidationError.NO_DIGITS)
-        if (password.hasLetter()) {
-            if (!password.hasUpperCase()) errors.add(PasswordValidationError.NO_CAPITALIZED_LETTER)
+        return if (charValidation.isEmpty()) {
+            null
         } else {
-            errors.add(PasswordValidationError.NO_LETTERS)
+            TextMessage.BuildString(
+                base = R.string.text_validation_error_password_base,
+                cases = charValidation
+            )
+        }
+    }
+
+    private fun charactersValidation(password: String): List<Int> {
+        val errors = mutableListOf<Int>()
+        if (!password.hasDigits()) errors.add(R.string.text_validation_error_password_base_digit)
+        if (password.hasLetter()) {
+            if (!password.hasUpperCase()) {
+                errors.add(R.string.text_validation_error_password_base_capitalized_letter)
+            }
+        } else {
+            errors.add(R.string.text_validation_error_password_base_letter)
         }
         return errors
     }

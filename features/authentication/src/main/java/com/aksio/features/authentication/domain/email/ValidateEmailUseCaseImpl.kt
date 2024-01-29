@@ -1,13 +1,19 @@
 package com.aksio.features.authentication.domain.email
 
 import android.util.Patterns
+import com.aksio.core.common.state.TextMessage
+import com.aksio.features.authentication.R
 import javax.inject.Inject
 
 class ValidateEmailUseCaseImpl @Inject constructor() : ValidateEmailUseCase {
 
-    override suspend fun invoke(email: String): List<EmailValidationError> {
-        if (email.isBlank() && email.isEmpty()) return listOf(EmailValidationError.EMPTY)
+    override suspend fun invoke(email: String): TextMessage? {
+        if (email.isBlank() && email.isEmpty()) return TextMessage.ResourceMessage(
+            templateRes = R.string.text_validation_error_empty_email
+        )
         val isValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        return if (isValid) emptyList() else listOf(EmailValidationError.INVALID)
+        return if (isValid) null else TextMessage.ResourceMessage(
+            templateRes = R.string.text_validation_error_invalid_email
+        )
     }
 }

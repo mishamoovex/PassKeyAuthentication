@@ -12,5 +12,12 @@
     <string name="email_sing_up_action_btn">Sing up</string>
     <string name="email_sing_up_action_login">Already have an account?<annotation link="action">Log in</annotation></string>
 
-
+    <string name="text_validation_error_empty_email">Email should not be empty</string>
+    <string name="text_validation_error_invalid_email">Email is not valid</string>
+    <string name="text_validation_error_password_empty">Password should not be empty</string>
+    <string name="text_validation_error_password_too_long">Password is too long</string>
+    <string name="text_validation_error_password_base">Please choose a stronger password. Please add </string>
+    <string name="text_validation_error_password_base_letter">letter</string>
+    <string name="text_validation_error_password_base_capitalized_letter">capitalized letter</string>
+    <string name="text_validation_error_password_base_digit">digit</string>
 </resources>
