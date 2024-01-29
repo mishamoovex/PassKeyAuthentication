@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actionable_text_preview">Whana test an action? <annotation action="click">Do it</annotation></string>
+</resources>

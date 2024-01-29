@@ -94,8 +94,8 @@ internal fun EmailSignUpScreen(
             modifier = Modifier.height(16.dp)
         )
         ActionableText(
-            text = stringResource(R.string.email_sing_up_action_login),
-            action = {},
+            actionableText = R.string.email_sing_up_action_login,
+            action = { TODO() },
             modifier = Modifier.fillMaxWidth()
         )
     }

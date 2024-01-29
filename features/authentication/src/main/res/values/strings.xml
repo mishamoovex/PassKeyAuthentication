@@ -10,7 +10,7 @@
     <string name="email_sing_up_input_filed_password_hilt">Choose password</string>
     <string name="email_sing_up_input_filed_password_confirmation_hilt">Confirm password</string>
     <string name="email_sing_up_action_btn">Sing up</string>
-    <string name="email_sing_up_action_login">Already have an account?<annotation link="action">Log in</annotation></string>
+    <string name="email_sing_up_action_login">Already have an account? <annotation action="click">Log in</annotation></string>
 
     <string name="text_validation_error_empty_email">Email should not be empty</string>
     <string name="text_validation_error_invalid_email">Email is not valid</string>
