@@ -20,5 +20,5 @@
     <string name="text_validation_error_password_base_letter">letter</string>
     <string name="text_validation_error_password_base_capitalized_letter">capitalized letter</string>
     <string name="text_validation_error_password_base_digit">digit</string>
-    <string name="text_validation_error_password_confirmation">Confirmation password doesn\'t match</string>
+    <string name="text_validation_error_password_confirmation">Passwords don\'t match</string>
 </resources>
