@@ -33,7 +33,7 @@ sealed class TextMessage(
 
             cases.forEachIndexed { index, case ->
                 if (index > 0) {
-                    val appendable = if (cases.size >= 3 && index == cases.size - 1) {
+                    val appendable = if (cases.size > 1 && index == cases.size - 1) {
                         append(" ")
                         context.resources.getString(R.string.text_field_separation_and)
                     } else {
