@@ -3,7 +3,7 @@ package com.aksio.core.common.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aksio.core.common.state.MessageState
-import com.aksio.core.common.state.SnackbarMessage
+import com.aksio.core.common.state.TextMessage
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +20,7 @@ abstract class BaseVm(
     protected open var doOnError = {}
 
     private val coroutineErrorHandler = CoroutineExceptionHandler { _, throwable ->
-        setMessage(SnackbarMessage.StringMessage(throwable.rationale))
+        setMessage(TextMessage.StringMessage(throwable.rationale))
         doOnError()
         throw throwable
     }
@@ -34,7 +34,7 @@ abstract class BaseVm(
     )
     val messageEvent = messageChannel.asStateFlow()
 
-    fun setMessage(message: SnackbarMessage?) {
+    fun setMessage(message: TextMessage?) {
         messageChannel.update {
             it.copy(message = message)
         }

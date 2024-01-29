@@ -5,4 +5,20 @@
     <string name="welcome_screen_secondary_action_title">Other options</string>
     <string name="privacy_text">By continuing you agree to our\n<annotation link="terms">Terms and Conditions</annotation> and <annotation link="policy">Privacy Policy</annotation></string>
 
+    <string name="email_sing_up_header">Sign up</string>
+    <string name="email_sing_up_input_field_email_hint">Registration email</string>
+    <string name="email_sing_up_input_filed_password_hilt">Choose password</string>
+    <string name="email_sing_up_input_filed_password_confirmation_hilt">Confirm password</string>
+    <string name="email_sing_up_action_btn">Sing up</string>
+    <string name="email_sing_up_action_login">Already have an account? <annotation action="click">Log in</annotation></string>
+
+    <string name="text_validation_error_empty_email">Email should not be empty</string>
+    <string name="text_validation_error_invalid_email">Email is not valid</string>
+    <string name="text_validation_error_password_empty">Password should not be empty</string>
+    <string name="text_validation_error_password_too_long">Password is too long</string>
+    <string name="text_validation_error_password_base">Choose a stronger password. Please add </string>
+    <string name="text_validation_error_password_base_letter">letter</string>
+    <string name="text_validation_error_password_base_capitalized_letter">capitalized letter</string>
+    <string name="text_validation_error_password_base_digit">digit</string>
+    <string name="text_validation_error_password_confirmation">Passwords don\'t match</string>
 </resources>

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -27,7 +26,7 @@ import com.aksio.core.designsystem.theme.AppTheme
 private fun ActionButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    isEnabled: Boolean = true,
     isLoading: Boolean = false,
     border: BorderStroke? = null,
     shape: Shape = RoundedCornerShape(16.dp),
@@ -39,7 +38,7 @@ private fun ActionButton(
     ),
     content: @Composable () -> Unit
 ) {
-    val shouldEnable = if (isLoading) true else enabled
+    val shouldEnable = if (isLoading) true else isEnabled
     val action = if (isLoading) { -> } else onClick
 
     Button(
@@ -80,7 +79,7 @@ fun TextActionButton(
     title: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    isEnabled: Boolean = true,
     isLoading: Boolean = false,
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(
@@ -95,7 +94,7 @@ fun TextActionButton(
     ActionButton(
         onClick,
         modifier,
-        enabled,
+        isEnabled,
         isLoading,
         border,
         shape,
@@ -155,7 +154,7 @@ internal fun ActionButtonPreview_Disabled() {
         TextActionButton(
             onClick = { },
             title = "Do some action",
-            enabled = false
+            isEnabled = false
         )
     }
 }
