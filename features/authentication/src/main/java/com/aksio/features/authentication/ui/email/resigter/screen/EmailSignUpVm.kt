@@ -10,6 +10,7 @@ import com.aksio.features.authentication.domain.email.ValidateEmailUseCase
 import com.aksio.features.authentication.domain.password.ValidatePasswordUseCase
 import com.aksio.features.authentication.ui.email.resigter.state.EmailSignUpUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -91,7 +92,7 @@ class EmailSignUpVm @Inject constructor(
         isLoadingState
     ) { email, password, confirmationPassword, isLoading ->
 
-        val updatedConfirmationPasswordState = password.copy(
+        val updatedConfirmationPasswordState = confirmationPassword.copy(
             validationState = validateConfirmationPassword(
                 password = password.value,
                 confirmationPassword = confirmationPassword.value
@@ -118,7 +119,7 @@ class EmailSignUpVm @Inject constructor(
             emailState = emailState.value,
             passwordState = passwordState.value,
             passwordConfirmationState = confirmationPasswordState.value,
-            actionButtonState = ActionButtonState(onClicked = ::singUpWithEmail)
+            actionButtonState = ActionButtonState()
         )
     )
 
@@ -140,7 +141,11 @@ class EmailSignUpVm @Inject constructor(
     }
 
     private fun singUpWithEmail() {
-
+        executionScope.launch {
+            isLoadingState.value = true
+            delay(1500)
+            isLoadingState.value = false
+        }
     }
 
 }

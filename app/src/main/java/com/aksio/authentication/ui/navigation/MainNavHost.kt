@@ -21,7 +21,8 @@ internal fun MainNavHost(
     ) {
         navGraphAuthentication(
             graphRoute = MainGraph.Authentication.route,
-            showMessage = showMessage
+            showMessage = showMessage,
+            navHostController = navHostController
         )
     }
 }

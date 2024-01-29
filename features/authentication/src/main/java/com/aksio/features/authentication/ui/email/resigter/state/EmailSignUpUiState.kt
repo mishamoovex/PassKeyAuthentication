@@ -4,8 +4,8 @@ import com.aksio.core.common.state.ActionButtonState
 import com.aksio.core.common.state.TextFieldState
 
 data class EmailSignUpUiState(
-    val emailState: TextFieldState,
-    val passwordState: TextFieldState,
-    val passwordConfirmationState: TextFieldState,
-    val actionButtonState: ActionButtonState
+    val emailState: TextFieldState = TextFieldState(),
+    val passwordState: TextFieldState = TextFieldState(),
+    val passwordConfirmationState: TextFieldState = TextFieldState(),
+    val actionButtonState: ActionButtonState = ActionButtonState()
 )
