@@ -3,7 +3,6 @@ package com.aksio.features.authentication.domain.email
 import com.aksio.core.common.state.TextMessage
 import com.aksio.features.authentication.R
 import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -15,7 +14,7 @@ class ValidateEmailUseCaseTest {
     @Test
     fun `SHOULD return null WHEN email is valid`() = runTest {
         val result = useCase.invoke("email@bank.com")
-        result.shouldNotBeNull()
+        result.shouldBeNull()
     }
 
     @Test
