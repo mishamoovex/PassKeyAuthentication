@@ -10,15 +10,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_17
-//        targetCompatibility = JavaVersion.VERSION_17
-//    }
-
-//    kotlinOptions {
-//        jvmTarget = libs.versions.kotlin.options.get()
-//    }
-
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(17)
