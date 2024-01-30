@@ -11,8 +11,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import com.aksio.core.designsystem.R
 import com.aksio.core.designsystem.theme.AppTheme
 
 @Composable
@@ -70,13 +68,3 @@ fun ActionableText(
     )
 }
 
-@Preview
-@Composable
-private fun ActionableTextPreview() {
-    AppTheme {
-        ActionableText(
-            actionableText = R.string.actionable_text_preview,
-            action = {}
-        )
-    }
-}
