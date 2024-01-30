@@ -5,6 +5,7 @@ gradle-min-sdk = "26"
 gradle-target-sdk = "34"
 kotlin = "1.9.21"
 kotlin-options = "1.8"
+kotlin-coroutines = "1.7.3"
 kotlin-serialization = "1.6.2"
 google-services = "4.4.0"
 android-store = "1.0.0"
@@ -26,6 +27,8 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.11.0"
+testing-junit4 = "4.13.2"
+testing-kotest-assertions = "5.8.0"
 
 [libraries]
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
@@ -53,6 +56,9 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+testing-junit4 = { group = "junit", name = "junit", version.ref = "testing-junit4" }
+testing-kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "testing-kotest-assertions" }
+testing-kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -65,4 +71,4 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 
 [bundles]
 compose = ["compose-ui", "compose-graphics", "compose-tooling", "compose-tooling-preview", "compose-material3", "compose-lifecycle", "compose-navigation", "compose-navigation-hilt"]
-
+testing-unit = ["testing-junit4", "testing-kotest-assertions", "testing-kotlin-coroutines"]

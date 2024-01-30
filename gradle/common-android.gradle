@@ -7,18 +7,28 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.gradle.min.sdk.get().toInteger()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = libs.versions.kotlin.options.get()
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
 dependencies {
     implementation libs.hilt
     kapt libs.hilt.compiler
+
+    testImplementation libs.bundles.testing.unit
 }

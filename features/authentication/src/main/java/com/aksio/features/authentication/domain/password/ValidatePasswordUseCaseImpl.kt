@@ -29,8 +29,11 @@ class ValidatePasswordUseCaseImpl @Inject constructor() : ValidatePasswordUseCas
     private fun charactersValidation(password: String): List<Int> {
         val errors = mutableListOf<Int>()
         if (!password.hasDigits()) errors.add(R.string.text_validation_error_password_base_digit)
-        if (!password.hasLetter()) errors.add(R.string.text_validation_error_password_base_letter)
-        if (!password.hasUpperCase()) errors.add(R.string.text_validation_error_password_base_capitalized_letter)
+        if (password.hasLetter()) {
+            if (!password.hasUpperCase()) errors.add(R.string.text_validation_error_password_base_capitalized_letter)
+        } else {
+            errors.add(R.string.text_validation_error_password_base_letter)
+        }
         return errors
     }
 
