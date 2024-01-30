@@ -1,0 +1,6 @@
+name: PR check
+
+on:
+  pull_request:
+    branches:
+      - main
