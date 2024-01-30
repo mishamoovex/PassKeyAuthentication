@@ -1,7 +1,7 @@
-package com.aksio.features.authentication
+package com.aksio.features.authentication.domain.email
 
 import com.aksio.core.common.state.TextMessage
-import com.aksio.features.authentication.domain.email.ValidateEmailUseCaseImpl
+import com.aksio.features.authentication.R
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
