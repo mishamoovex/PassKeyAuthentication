@@ -30,6 +30,5 @@ dependencies {
     implementation libs.hilt
     kapt libs.hilt.compiler
 
-    testImplementation libs.testing.junit4
-    testImplementation libs.testing.kotest.assertions
+    testImplementation libs.bundles.testing.unit
 }
