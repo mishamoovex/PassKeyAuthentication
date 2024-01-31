@@ -46,7 +46,7 @@ jobs:
           distribution: 'zulu'
 
       - name: Unit tests
-        run: bash ./gradlew test
+        run: bash ./gradlew test --continue
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
