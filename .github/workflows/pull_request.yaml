@@ -54,7 +54,7 @@ jobs:
 
   build:
     name: Build
-    needs: [ lint ]
+    needs: [ unit-tests ]
     runs-on: ubuntu-latest
 
     steps:
