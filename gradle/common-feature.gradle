@@ -17,4 +17,6 @@ dependencies {
     debugImplementation libs.compose.tooling
     implementation libs.bundles.compose
     implementation libs.android.lifecycle.vm
+
+    testImplementation project(":core:tests-shared")
 }
