@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/core/repository" />
             <option value="$PROJECT_DIR$/core/repository/authentication" />
+            <option value="$PROJECT_DIR$/core/tests-shared" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/authentication" />
             <option value="$PROJECT_DIR$/features/home" />

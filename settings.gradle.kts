@@ -25,4 +25,5 @@ include(":core:data:store")
 include(":core:data:firebase:auth")
 include(":features:authentication")
 include(":features:home")
+include(":core:tests-shared")
  
