@@ -1,0 +1,72 @@
+name: Pull request
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4.0.0
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Run Lint
+        run: ./gradlew lintDebug
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: lint_report
+          path: app/build/reports/lint-results-debug.html
+
+  unit-tests:
+    name: Unit tests
+    needs: [ lint ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4.0.0
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Unit tests
+        run: bash ./gradlew test --continue
+
+      - name: Android Test Report
+        uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() }}
+
+  build:
+    name: Build
+    needs: [ lint ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4.0.0
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+          cache: 'gradle'
+
+      - name: Build gradle project
+        run: ./gradlew build
