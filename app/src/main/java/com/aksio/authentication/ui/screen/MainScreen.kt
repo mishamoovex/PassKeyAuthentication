@@ -10,13 +10,15 @@ import com.aksio.authentication.ui.navigation.MainNavHost
 import com.aksio.authentication.ui.screen.components.AppSnackbarHost
 import com.aksio.authentication.ui.state.MainScreenUiState
 import com.aksio.authentication.ui.state.rememberMainScreenState
-import com.aksio.core.common.state.MessageState
+import com.aksio.core.common.state.TextMessage
 import com.aksio.core.designsystem.theme.AppTheme
+import java.util.UUID
 
 @Composable
 fun MainScreen(
     uiState: MainScreenUiState,
-    messageState: MessageState,
+    messages: List<TextMessage>,
+    onMessageShown: (UUID) -> Unit,
     hideSplashScreen: () -> Unit
 ) {
 
@@ -42,10 +44,10 @@ fun MainScreen(
         }
     }
 
-    LaunchedEffect(messageState){
-        messageState.message?.let {
-            screenState.showMessage(it)
-            messageState.onShown
+    LaunchedEffect(messages) {
+        messages.firstOrNull()?.let { displayMessage ->
+            screenState.showMessage(displayMessage)
+            onMessageShown(displayMessage.id)
         }
     }
 }

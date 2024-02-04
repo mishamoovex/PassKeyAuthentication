@@ -25,12 +25,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel = hiltViewModel<MainScreenVm>()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            val messageState by viewModel.messageEvent.collectAsStateWithLifecycle()
+            val messageState by viewModel.displayMessages.collectAsStateWithLifecycle()
 
             AppTheme {
                 MainScreen(
                     uiState = uiState,
-                    messageState = messageState,
+                    messages = messageState,
+                    onMessageShown = viewModel::setMessageShown,
                     hideSplashScreen = { isSplashActive.set(false) }
                 )
             }
