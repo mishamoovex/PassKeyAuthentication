@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.aksio.core.models.auth.AuthenticationProvider
 import java.time.LocalDateTime
 
-@Entity
+@Entity(tableName = "user")
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,

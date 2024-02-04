@@ -9,13 +9,14 @@ import com.aksio.core.common.state.TextFieldState
 import com.aksio.core.common.state.TextMessage
 import com.aksio.core.common.state.ValidationState
 import com.aksio.core.common.vm.executeAction
+import com.aksio.core.models.auth.RegistrationRequest
+import com.aksio.core.repository.authentication.repository.AuthenticationRepository
 import com.aksio.features.authentication.R
 import com.aksio.features.authentication.di.EmailValidator
 import com.aksio.features.authentication.di.PasswordValidator
 import com.aksio.features.authentication.domain.validation.StringValidationUseCase
 import com.aksio.features.authentication.ui.email.resigter.state.EmailSignUpUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class EmailSignUpVm @Inject constructor(
     @EmailValidator private val validateEmailUseCase: StringValidationUseCase,
     @PasswordValidator private val validatePasswordUseCase: StringValidationUseCase,
+    private val authenticationRepository: AuthenticationRepository,
     private val messenger: ErrorMessenger
 ) : ViewModel(),
     ErrorMessenger by messenger {
@@ -151,7 +153,15 @@ class EmailSignUpVm @Inject constructor(
     private fun singUpWithEmail() {
         executeAction(
             onLoading = { isLoading -> isLoadingState.update { isLoading } },
-            execute = { delay(1500) }
+            execute = {
+                val state = uiState.value
+                val request = RegistrationRequest.Password(
+                    email = state.emailState.value,
+                    password = state.passwordState.value
+                )
+                authenticationRepository.registerUser(request)
+                //send verification email and navigate to info screen
+            }
         )
     }
 
