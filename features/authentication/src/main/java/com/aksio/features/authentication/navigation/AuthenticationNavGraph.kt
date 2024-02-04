@@ -36,12 +36,12 @@ fun NavGraphBuilder.navGraphAuthentication(
 
             val viewModel = hiltViewModel<EmailSignUpVm>()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            val messageState by viewModel.messageEvent.collectAsStateWithLifecycle()
+            val messages by viewModel.displayMessages.collectAsStateWithLifecycle()
 
-            LaunchedEffect(messageState) {
-                messageState.message?.let {
-                    showMessage(it)
-                    messageState.onShown()
+            LaunchedEffect(messages) {
+                messages.firstOrNull()?.let { displayMessage ->
+                    showMessage(displayMessage)
+                    viewModel.setMessageShown(displayMessage.id)
                 }
             }
 
