@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 @Entity
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0,
     val email: String,
     val authProvider: AuthenticationProvider,
     val createdAt: LocalDateTime,
