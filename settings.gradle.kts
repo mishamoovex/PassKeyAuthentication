@@ -1,8 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":core:hilt")
-
-
 pluginManagement {
     repositories {
         google()
@@ -23,6 +20,8 @@ rootProject.name = "Authentication"
 include(":app")
 include(":core:designsystem")
 include(":core:common")
+include(":core:models")
+include(":core:hilt")
 include(":core:repository:authentication")
 include(":core:data:store")
 include(":core:data:firebase:auth")

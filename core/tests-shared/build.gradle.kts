@@ -9,6 +9,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:models"))
     implementation(project(":core:common"))
     implementation(libs.bundles.testing.unit)
 }

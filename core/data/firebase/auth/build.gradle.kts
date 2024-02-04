@@ -9,5 +9,6 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:models"))
     implementation(libs.firebase.auth)
 }
