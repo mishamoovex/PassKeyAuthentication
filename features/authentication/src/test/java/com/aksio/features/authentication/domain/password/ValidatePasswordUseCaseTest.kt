@@ -2,6 +2,7 @@ package com.aksio.features.authentication.domain.password
 
 import com.aksio.core.common.state.TextMessage
 import com.aksio.features.authentication.R
+import com.aksio.features.authentication.domain.validation.ValidatePasswordUseCase
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,19 +13,15 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class ValidatePasswordUseCaseTest {
 
-    private companion object {
-        const val PASSWORD_LENGTH = 6
-    }
-
     private val testDispatcher = UnconfinedTestDispatcher()
-    private val useCase = ValidatePasswordUseCaseImpl(testDispatcher)
+    private val useCase = ValidatePasswordUseCase(testDispatcher)
 
     @Test
     fun `SHOULD return NULL WHEN password is valid`() = runTest(testDispatcher) {
         //Given a valid password
         val password = "1234qQ"
         //When validating given password
-        val errorMessage = useCase(password, PASSWORD_LENGTH)
+        val errorMessage = useCase(password)
         //Than the error message must be null which means it is valid
         errorMessage.shouldBeNull()
     }
@@ -34,7 +31,7 @@ class ValidatePasswordUseCaseTest {
         //Given an empty string that represents password
         val password = ""
         //When validating the given password
-        val errorMessage = useCase(password, PASSWORD_LENGTH)
+        val errorMessage = useCase(password)
         //Than the result must be an "empty" error message
         errorMessage shouldBe TextMessage.ResourceMessage(
             templateRes = R.string.text_validation_error_password_empty
@@ -46,7 +43,7 @@ class ValidatePasswordUseCaseTest {
         //Given a password than longer than expected
         val password = "1234567"
         //When validating the given password
-        val errorMessage = useCase(password, PASSWORD_LENGTH)
+        val errorMessage = useCase(password)
         //Than the result must be a "too long" error message
         errorMessage shouldBe TextMessage.ResourceMessage(
             templateRes = R.string.text_validation_error_password_too_long
@@ -58,7 +55,7 @@ class ValidatePasswordUseCaseTest {
         //Given a password of the required length which doesn't contain digits
         val password = "Qwerty"
         //When validating the given password
-        val errorMessage = useCase(password, PASSWORD_LENGTH)
+        val errorMessage = useCase(password)
         //Than the result must be a "no digits" error message
         errorMessage shouldBe TextMessage.BuildString(
             base = R.string.text_validation_error_password_base,
@@ -71,7 +68,7 @@ class ValidatePasswordUseCaseTest {
         //Given a password of the required length which doesn't contain letters
         val password = "123456"
         //When validating the given password
-        val errorMessage = useCase(password, PASSWORD_LENGTH)
+        val errorMessage = useCase(password)
         //Than the result must be a "no letters" error message
         errorMessage shouldBe TextMessage.BuildString(
             base = R.string.text_validation_error_password_base,
@@ -85,7 +82,7 @@ class ValidatePasswordUseCaseTest {
             //Given a password of the required length which doesn't contain capitalized letters
             val password = "12345q"
             //When validating the given password
-            val errorMessage = useCase(password, PASSWORD_LENGTH)
+            val errorMessage = useCase(password)
             //Than the result must be a "no letters" error message
             errorMessage shouldBe TextMessage.BuildString(
                 base = R.string.text_validation_error_password_base,
@@ -99,7 +96,7 @@ class ValidatePasswordUseCaseTest {
             //Given a password of the required length which consists of special characters
             val password = "++##%%"
             //When validating the given password
-            val errorMessage = useCase(password, PASSWORD_LENGTH)
+            val errorMessage = useCase(password)
             //Than the result must be a "no letters" error message
             errorMessage shouldBe TextMessage.BuildString(
                 base = R.string.text_validation_error_password_base,

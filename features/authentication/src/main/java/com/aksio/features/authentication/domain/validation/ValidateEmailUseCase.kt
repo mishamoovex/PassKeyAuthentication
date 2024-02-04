@@ -1,4 +1,4 @@
-package com.aksio.features.authentication.domain.email
+package com.aksio.features.authentication.domain.validation
 
 import androidx.core.util.PatternsCompat
 import com.aksio.core.common.state.TextMessage
@@ -8,16 +8,16 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ValidateEmailUseCaseImpl @Inject constructor(
+class ValidateEmailUseCase @Inject constructor(
     @DispatcherComputation private val computationDispatcher: CoroutineDispatcher
-) : ValidateEmailUseCase {
+) : StringValidationUseCase {
 
-    override suspend fun invoke(email: String): TextMessage? {
-        if (email.isBlank() && email.isEmpty()) return TextMessage.ResourceMessage(
+    override suspend fun invoke(value: String): TextMessage? {
+        if (value.isBlank() && value.isEmpty()) return TextMessage.ResourceMessage(
             templateRes = R.string.text_validation_error_empty_email
         )
         return withContext(computationDispatcher) {
-            val isValid = PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
+            val isValid = PatternsCompat.EMAIL_ADDRESS.matcher(value).matches()
             if (isValid) null else TextMessage.ResourceMessage(
                 templateRes = R.string.text_validation_error_invalid_email
             )
