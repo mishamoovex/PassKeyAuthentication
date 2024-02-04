@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/data" />
+            <option value="$PROJECT_DIR$/core/data/db" />
             <option value="$PROJECT_DIR$/core/data/firebase" />
             <option value="$PROJECT_DIR$/core/data/firebase/auth" />
             <option value="$PROJECT_DIR$/core/designsystem" />
