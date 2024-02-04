@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core/data/firebase/auth" />
             <option value="$PROJECT_DIR$/core/data/store" />
             <option value="$PROJECT_DIR$/core/designsystem" />
+            <option value="$PROJECT_DIR$/core/hilt" />
             <option value="$PROJECT_DIR$/core/repository" />
             <option value="$PROJECT_DIR$/core/repository/authentication" />
             <option value="$PROJECT_DIR$/core/tests-shared" />
