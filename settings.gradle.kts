@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":core:hilt")
+
+
 pluginManagement {
     repositories {
         google()

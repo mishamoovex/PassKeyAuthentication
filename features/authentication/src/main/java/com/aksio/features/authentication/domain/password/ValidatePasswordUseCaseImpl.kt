@@ -1,10 +1,15 @@
 package com.aksio.features.authentication.domain.password
 
 import com.aksio.core.common.state.TextMessage
+import com.aksio.core.hilt.DispatcherComputation
 import com.aksio.features.authentication.R
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ValidatePasswordUseCaseImpl @Inject constructor() : ValidatePasswordUseCase {
+class ValidatePasswordUseCaseImpl @Inject constructor(
+    @DispatcherComputation private val computationDispatcher: CoroutineDispatcher
+) : ValidatePasswordUseCase {
 
     override suspend fun invoke(password: String, length: Int): TextMessage? {
         if (password.isEmpty() && password.isBlank()) return TextMessage.ResourceMessage(
@@ -26,16 +31,17 @@ class ValidatePasswordUseCaseImpl @Inject constructor() : ValidatePasswordUseCas
         }
     }
 
-    private fun charactersValidation(password: String): List<Int> {
-        val errors = mutableListOf<Int>()
-        if (!password.hasDigits()) errors.add(R.string.text_validation_error_password_base_digit)
-        if (password.hasLetter()) {
-            if (!password.hasUpperCase()) errors.add(R.string.text_validation_error_password_base_capitalized_letter)
-        } else {
-            errors.add(R.string.text_validation_error_password_base_letter)
+    private suspend fun charactersValidation(password: String): List<Int> =
+        withContext(computationDispatcher) {
+            val errors = mutableListOf<Int>()
+            if (!password.hasDigits()) errors.add(R.string.text_validation_error_password_base_digit)
+            if (password.hasLetter()) {
+                if (!password.hasUpperCase()) errors.add(R.string.text_validation_error_password_base_capitalized_letter)
+            } else {
+                errors.add(R.string.text_validation_error_password_base_letter)
+            }
+            errors
         }
-        return errors
-    }
 
     private fun String.hasUpperCase() = any { it.isUpperCase() }
 
