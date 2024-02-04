@@ -1,9 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":core:data:db")
-
-
-
 pluginManagement {
     repositories {
         google()
@@ -27,8 +23,9 @@ include(":core:common")
 include(":core:models")
 include(":core:hilt")
 include(":core:repository:authentication")
+include(":core:data:db")
 include(":core:data:firebase:auth")
 include(":features:authentication")
 include(":features:home")
-include(":core:tests-shared")
+include(":core:tests")
  

@@ -15,5 +15,5 @@ dependencies {
     implementation(project(":core:hilt"))
     implementation(project(":core:repository:authentication"))
 
-    testImplementation(project(":core:tests-shared"))
+    testImplementation(project(":core:tests"))
 }
