@@ -1,8 +1,8 @@
 package com.aksio.features.authentication.ui.email.resigter.screen
 
-import com.aksio.core.common.constants.Constants.PASSWORD_LENGTH
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aksio.core.common.constants.Constants.PASSWORD_LENGTH
 import com.aksio.core.common.core.messenger.error.ErrorMessenger
 import com.aksio.core.common.state.ActionButtonState
 import com.aksio.core.common.state.TextFieldState
