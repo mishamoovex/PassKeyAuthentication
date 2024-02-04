@@ -2,6 +2,7 @@ package com.aksio.features.authentication.domain.email
 
 import com.aksio.core.common.state.TextMessage
 import com.aksio.features.authentication.R
+import com.aksio.features.authentication.domain.validation.ValidateEmailUseCase
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,7 +14,7 @@ import org.junit.Test
 class ValidateEmailUseCaseTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
-    private val useCase = ValidateEmailUseCaseImpl(testDispatcher)
+    private val useCase = ValidateEmailUseCase(testDispatcher)
 
     @Test
     fun `SHOULD return null WHEN email is valid`() = runTest(testDispatcher) {

@@ -1,21 +1,32 @@
 package com.aksio.features.authentication.di
 
-import com.aksio.features.authentication.domain.email.ValidateEmailUseCase
-import com.aksio.features.authentication.domain.email.ValidateEmailUseCaseImpl
-import com.aksio.features.authentication.domain.password.ValidatePasswordUseCase
-import com.aksio.features.authentication.domain.password.ValidatePasswordUseCaseImpl
+import com.aksio.features.authentication.domain.validation.StringValidationUseCase
+import com.aksio.features.authentication.domain.validation.ValidateEmailUseCase
+import com.aksio.features.authentication.domain.validation.ValidatePasswordUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(ViewModelComponent::class)
 interface UseCaseModule {
 
     @Binds
-    fun bindValidateEmailUc(impl: ValidateEmailUseCaseImpl): ValidateEmailUseCase
+    @EmailValidator
+    fun bindEmailValidator(impl: ValidateEmailUseCase): StringValidationUseCase
 
     @Binds
-    fun bindValidatePasswordUc(impl: ValidatePasswordUseCaseImpl): ValidatePasswordUseCase
+    @PasswordValidator
+    fun bindPasswordValidator(impl: ValidatePasswordUseCase): StringValidationUseCase
+
 }
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class EmailValidator
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class PasswordValidator

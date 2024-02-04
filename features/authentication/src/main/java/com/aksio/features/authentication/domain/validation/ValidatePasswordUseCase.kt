@@ -1,5 +1,6 @@
-package com.aksio.features.authentication.domain.password
+package com.aksio.features.authentication.domain.validation
 
+import com.aksio.core.common.constants.Constants
 import com.aksio.core.common.state.TextMessage
 import com.aksio.core.hilt.DispatcherComputation
 import com.aksio.features.authentication.R
@@ -7,19 +8,19 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ValidatePasswordUseCaseImpl @Inject constructor(
-    @DispatcherComputation private val computationDispatcher: CoroutineDispatcher
-) : ValidatePasswordUseCase {
+class ValidatePasswordUseCase @Inject constructor(
+    @DispatcherComputation private val computationDispatcher: CoroutineDispatcher,
+) : StringValidationUseCase {
 
-    override suspend fun invoke(password: String, length: Int): TextMessage? {
-        if (password.isEmpty() && password.isBlank()) return TextMessage.ResourceMessage(
+    override suspend fun invoke(value: String): TextMessage? {
+        if (value.isEmpty() && value.isBlank()) return TextMessage.ResourceMessage(
             templateRes = R.string.text_validation_error_password_empty
         )
-        if (password.length > length) return TextMessage.ResourceMessage(
+        if (value.length > Constants.PASSWORD_LENGTH) return TextMessage.ResourceMessage(
             templateRes = R.string.text_validation_error_password_too_long
         )
 
-        val charValidation = charactersValidation(password)
+        val charValidation = charactersValidation(value)
 
         return if (charValidation.isEmpty()) {
             null

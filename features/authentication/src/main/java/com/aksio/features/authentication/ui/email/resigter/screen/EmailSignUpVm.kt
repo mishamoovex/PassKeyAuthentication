@@ -1,13 +1,15 @@
 package com.aksio.features.authentication.ui.email.resigter.screen
 
+import com.aksio.core.common.constants.Constants.PASSWORD_LENGTH
 import com.aksio.core.common.state.ActionButtonState
 import com.aksio.core.common.state.TextFieldState
 import com.aksio.core.common.state.TextMessage
 import com.aksio.core.common.state.ValidationState
 import com.aksio.core.common.vm.BaseVm
 import com.aksio.features.authentication.R
-import com.aksio.features.authentication.domain.email.ValidateEmailUseCase
-import com.aksio.features.authentication.domain.password.ValidatePasswordUseCase
+import com.aksio.features.authentication.di.EmailValidator
+import com.aksio.features.authentication.di.PasswordValidator
+import com.aksio.features.authentication.domain.validation.StringValidationUseCase
 import com.aksio.features.authentication.ui.email.resigter.state.EmailSignUpUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -22,12 +24,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EmailSignUpVm @Inject constructor(
-    private val validateEmailUseCase: ValidateEmailUseCase,
-    private val validatePasswordUseCase: ValidatePasswordUseCase
+    @EmailValidator private val validateEmailUseCase: StringValidationUseCase,
+    @PasswordValidator private val validatePasswordUseCase: StringValidationUseCase
 ) : BaseVm() {
 
     private companion object {
-        const val PASSWORD_LENGTH = 6
         const val EMAIL_VALIDATION_LENGTH = 6
     }
 
@@ -59,7 +60,7 @@ class EmailSignUpVm @Inject constructor(
     private fun updatePassword(password: String) {
         executionScope.launch {
             val validationResult = if (password.length >= PASSWORD_LENGTH) {
-                validatePasswordUseCase(password = password, length = PASSWORD_LENGTH)
+                validatePasswordUseCase(password)
                     ?.let(ValidationState::Invalid)
                     ?: ValidationState.Valid
             } else ValidationState.Pending
