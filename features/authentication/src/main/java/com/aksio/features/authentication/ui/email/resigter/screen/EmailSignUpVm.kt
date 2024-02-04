@@ -1,10 +1,13 @@
 package com.aksio.features.authentication.ui.email.resigter.screen
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.aksio.core.common.core.messenger.error.ErrorMessenger
 import com.aksio.core.common.state.ActionButtonState
 import com.aksio.core.common.state.TextFieldState
 import com.aksio.core.common.state.TextMessage
 import com.aksio.core.common.state.ValidationState
-import com.aksio.core.common.vm.BaseVm
+import com.aksio.core.common.vm.executeAction
 import com.aksio.features.authentication.R
 import com.aksio.features.authentication.domain.email.ValidateEmailUseCase
 import com.aksio.features.authentication.domain.password.ValidatePasswordUseCase
@@ -14,17 +17,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EmailSignUpVm @Inject constructor(
     private val validateEmailUseCase: ValidateEmailUseCase,
-    private val validatePasswordUseCase: ValidatePasswordUseCase
-) : BaseVm() {
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val messenger: ErrorMessenger
+) : ViewModel(),
+    ErrorMessenger by messenger {
 
     private companion object {
         const val PASSWORD_LENGTH = 6
@@ -36,7 +41,7 @@ class EmailSignUpVm @Inject constructor(
     )
 
     private fun updateEmail(email: String) {
-        executionScope.launch {
+        executeAction {
             val validationResult = if (email.length >= EMAIL_VALIDATION_LENGTH) {
                 validateEmailUseCase(email)
                     ?.let(ValidationState::Invalid)
@@ -57,7 +62,7 @@ class EmailSignUpVm @Inject constructor(
     )
 
     private fun updatePassword(password: String) {
-        executionScope.launch {
+        executeAction {
             val validationResult = if (password.length >= PASSWORD_LENGTH) {
                 validatePasswordUseCase(password = password, length = PASSWORD_LENGTH)
                     ?.let(ValidationState::Invalid)
@@ -112,16 +117,18 @@ class EmailSignUpVm @Inject constructor(
                 onClicked = ::singUpWithEmail
             )
         )
-    }.stateIn(
-        scope = executionScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = EmailSignUpUiState(
-            emailState = emailState.value,
-            passwordState = passwordState.value,
-            passwordConfirmationState = confirmationPasswordState.value,
-            actionButtonState = ActionButtonState()
+    }
+        .catch { showError(it) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = EmailSignUpUiState(
+                emailState = emailState.value,
+                passwordState = passwordState.value,
+                passwordConfirmationState = confirmationPasswordState.value,
+                actionButtonState = ActionButtonState()
+            )
         )
-    )
 
     private fun validateConfirmationPassword(
         password: String,
@@ -141,11 +148,10 @@ class EmailSignUpVm @Inject constructor(
     }
 
     private fun singUpWithEmail() {
-        executionScope.launch {
-            isLoadingState.value = true
-            delay(1500)
-            isLoadingState.value = false
-        }
+        executeAction(
+            onLoading = { isLoading -> isLoadingState.update { isLoading } },
+            execute = { delay(1500) }
+        )
     }
 
 }
