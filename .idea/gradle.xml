@@ -15,7 +15,6 @@
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/data/firebase" />
             <option value="$PROJECT_DIR$/core/data/firebase/auth" />
-            <option value="$PROJECT_DIR$/core/data/store" />
             <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/core/hilt" />
             <option value="$PROJECT_DIR$/core/models" />

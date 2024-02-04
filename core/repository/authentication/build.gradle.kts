@@ -10,6 +10,5 @@ android {
 
 dependencies {
     implementation(project(":core:models"))
-    implementation(project(":core:data:store"))
     implementation(project(":core:data:firebase:auth"))
 }
