@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(project(":core:models"))
+    implementation(project(":core:utilities"))
     implementation(project(":core:data:firebase:auth"))
     implementation(project(":core:data:db"))
 }

@@ -12,7 +12,7 @@ dependencies {
     implementation(project(":core:models"))
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
-    implementation(project(":core:hilt"))
+    implementation(project(":core:utilities"))
     implementation(project(":core:repository:authentication"))
 
     testImplementation(project(":core:tests"))
