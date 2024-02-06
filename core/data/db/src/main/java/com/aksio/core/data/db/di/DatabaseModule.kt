@@ -22,7 +22,7 @@ internal object DatabaseModule {
         .databaseBuilder(
             context = appContext,
             klass = ApplicationDb::class.java,
-            name = "Timemate"
+            name = "AuthenticationApp"
         )
         .build()
 

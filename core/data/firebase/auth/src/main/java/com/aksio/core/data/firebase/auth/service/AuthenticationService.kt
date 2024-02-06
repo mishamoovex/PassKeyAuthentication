@@ -9,7 +9,7 @@ interface AuthenticationService {
 
     suspend fun authenticate()
 
-    suspend fun isAuthenticated()
+    suspend fun isAuthenticated(): Boolean
 
     suspend fun signOut()
 

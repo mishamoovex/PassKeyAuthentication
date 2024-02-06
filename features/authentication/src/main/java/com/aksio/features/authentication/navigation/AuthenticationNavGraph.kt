@@ -7,12 +7,14 @@ import androidx.navigation.navigation
 import com.aksio.core.common.state.TextMessage
 import com.aksio.features.authentication.ui.email.login.screen.EmailSingInScreen
 import com.aksio.features.authentication.ui.email.resigter.screen.EmailSignUpScreen
+import com.aksio.features.authentication.ui.email.verify.screen.EmailVerificationScreen
 import com.aksio.features.authentication.ui.welcome.screen.WelcomeScreen
 
 private sealed class AuthNavGraph(open val route: String) {
     data object Welcome : AuthNavGraph(route = "Welcome")
     data object EmailSignIn : AuthNavGraph(route = "EmailSingIn")
     data object EmailSignUp : AuthNavGraph(route = "EmailSingUp")
+    data object EmailVerification : AuthNavGraph(route = "EmailVerification")
 }
 
 fun NavGraphBuilder.navGraphAuthentication(
@@ -31,7 +33,11 @@ fun NavGraphBuilder.navGraphAuthentication(
         composable(AuthNavGraph.EmailSignUp.route) {
             EmailSignUpScreen(
                 showMessage = showMessage,
-                toEmailVerification = {},
+                toEmailVerification = {
+                    navHostController.navigate(AuthNavGraph.EmailVerification.route) {
+                        popUpTo(AuthNavGraph.EmailSignUp.route) { inclusive = true }
+                    }
+                },
                 toLogin = {
                     navHostController.navigate(AuthNavGraph.EmailSignIn.route) {
                         popUpTo(AuthNavGraph.EmailSignUp.route) { inclusive = true }
@@ -42,6 +48,10 @@ fun NavGraphBuilder.navGraphAuthentication(
 
         composable(AuthNavGraph.EmailSignIn.route) {
             EmailSingInScreen()
+        }
+
+        composable(AuthNavGraph.EmailVerification.route){
+            EmailVerificationScreen()
         }
     }
 }
