@@ -29,7 +29,6 @@ fun NavGraphBuilder.navGraphAuthentication(
 
         composable(AuthNavGraph.EmailSignUp.route) {
             EmailSignUpScreen(
-                navigateUp = navHostController::navigateUp,
                 showMessage = showMessage,
                 toEmailVerification = {},
                 toLogin = {}

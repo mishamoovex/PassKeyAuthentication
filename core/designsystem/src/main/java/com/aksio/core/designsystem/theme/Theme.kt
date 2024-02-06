@@ -11,7 +11,7 @@ fun AppTheme(
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalCustomColors provides LightColorPalette,
+        LocalCustomColors provides DarkColorPalette,
         LocalCustomTypography provides Typography
     ) {
         MaterialTheme(

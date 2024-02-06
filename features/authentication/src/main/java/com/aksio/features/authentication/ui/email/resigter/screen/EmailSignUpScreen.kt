@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,7 +22,6 @@ import com.aksio.core.common.state.TextMessage
 import com.aksio.core.designsystem.components.ActionableText
 import com.aksio.core.designsystem.components.AppTextField
 import com.aksio.core.designsystem.components.TextActionButton
-import com.aksio.core.designsystem.components.Toolbar
 import com.aksio.core.designsystem.theme.AppTheme
 import com.aksio.features.authentication.R
 import com.aksio.features.authentication.ui.email.resigter.state.EmailSignUpUiState
@@ -32,47 +30,32 @@ import com.aksio.features.authentication.ui.email.resigter.state.EmailSignUpUiSt
 internal fun EmailSignUpScreen(
     viewModel: EmailSignUpVm = hiltViewModel(),
     showMessage: (TextMessage) -> Unit,
-    navigateUp: () -> Unit,
     toEmailVerification: () -> Unit,
     toLogin: () -> Unit
 ) {
-    Scaffold(
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val messages by viewModel.displayMessages.collectAsStateWithLifecycle()
+    val navigationState by viewModel.navigationState.collectAsStateWithLifecycle()
+
+    ScreenContent(
+        uiState = uiState,
         modifier = Modifier
             .fillMaxSize()
-            .padding(
-                bottom = 24.dp,
-                start = 16.dp,
-                end = 16.dp
-            ),
-        topBar = {
-            Toolbar(
-                onBack = navigateUp
-            )
+            .padding(top = 32.dp),
+        toLogin = toLogin
+    )
+
+    messages.firstOrNull()?.let { message ->
+        LaunchedEffect(messages) {
+            showMessage(message)
+            viewModel.setMessageShown(message.id)
         }
-    ) { paddings ->
+    }
 
-        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        val messages by viewModel.displayMessages.collectAsStateWithLifecycle()
-        val navigationState by viewModel.navigationState.collectAsStateWithLifecycle()
-
-        ScreenContent(
-            uiState = uiState,
-            modifier = Modifier.padding(paddings),
-            toLogin = toLogin
-        )
-
-        messages.firstOrNull()?.let { message ->
-            LaunchedEffect(messages) {
-                showMessage(message)
-                viewModel.setMessageShown(message.id)
-            }
-        }
-
-        navigationState.args?.let { navArgs ->
-            LaunchedEffect(navArgs) {
-                toEmailVerification()
-                navigationState.onNavigated()
-            }
+    navigationState.args?.let { navArgs ->
+        LaunchedEffect(navArgs) {
+            toEmailVerification()
+            navigationState.onNavigated()
         }
     }
 }
@@ -135,8 +118,7 @@ private fun ScreenContent(
             title = stringResource(R.string.email_sing_up_action_btn),
             onClick = uiState.actionButtonState.onClicked,
             isLoading = uiState.actionButtonState.isLoading,
-            isEnabled = uiState.actionButtonState.isEnabled,
-            modifier = Modifier.fillMaxWidth()
+            isEnabled = uiState.actionButtonState.isEnabled
         )
         Spacer(
             modifier = Modifier.height(16.dp)
