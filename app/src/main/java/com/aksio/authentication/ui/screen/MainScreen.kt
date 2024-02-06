@@ -63,8 +63,8 @@ fun MainScreen(
         }
     }
 
-    LaunchedEffect(messages) {
-        messages.firstOrNull()?.let { displayMessage ->
+    messages.firstOrNull()?.let { displayMessage ->
+        LaunchedEffect(messages) {
             screenState.showMessage(displayMessage)
             onMessageShown(displayMessage.id)
         }
