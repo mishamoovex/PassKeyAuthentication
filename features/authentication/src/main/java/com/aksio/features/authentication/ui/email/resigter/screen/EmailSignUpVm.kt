@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.aksio.core.common.constants.Constants.PASSWORD_LENGTH
 import com.aksio.core.common.core.messenger.error.ErrorMessenger
 import com.aksio.core.common.state.ActionButtonState
+import com.aksio.core.common.state.NavigationState
 import com.aksio.core.common.state.TextFieldState
 import com.aksio.core.common.state.TextMessage
 import com.aksio.core.common.state.ValidationState
@@ -91,14 +92,25 @@ class EmailSignUpVm @Inject constructor(
         }
     }
 
+    private val navigationState = MutableStateFlow(
+        NavigationState<Unit>(
+            onNavigated = {}
+        )
+    )
+
+    private fun setNavigationArgs(args: Unit?) {
+        navigationState.update { it.copy(args = args) }
+    }
+
     private val isLoadingState = MutableStateFlow(false)
 
     val uiState: StateFlow<EmailSignUpUiState> = combine(
         emailState,
         passwordState,
         confirmationPasswordState,
-        isLoadingState
-    ) { email, password, confirmationPassword, isLoading ->
+        isLoadingState,
+        navigationState
+    ) { email, password, confirmationPassword, isLoading, navigation ->
 
         val updatedConfirmationPasswordState = confirmationPassword.copy(
             validationState = validateConfirmationPassword(
@@ -118,7 +130,8 @@ class EmailSignUpVm @Inject constructor(
                 isLoading = isLoading,
                 isEnabled = isDataValid,
                 onClicked = ::singUpWithEmail
-            )
+            ),
+            navigationState = navigation
         )
     }
         .catch { showError(it) }
@@ -160,7 +173,8 @@ class EmailSignUpVm @Inject constructor(
                     password = state.passwordState.value
                 )
                 authenticationRepository.registerUser(request)
-                //send verification email and navigate to info screen
+                authenticationRepository.sendVerificationEmail()
+                setNavigationArgs(Unit)
             }
         )
     }

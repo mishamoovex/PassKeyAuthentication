@@ -19,11 +19,18 @@ internal class AuthenticationRepositoryImpl @Inject constructor(
         val creationTime = OffsetDateTime.now(clock)
         val user = UserEntity(
             email = authResponse.email,
-            isVerificationEmailSent = false,
             authProvider = authResponse.provider,
             createdAt = creationTime,
             lastLogin = creationTime
         )
         userDao.insert(user)
+    }
+
+    override suspend fun sendVerificationEmail() {
+        authenticationService.sendVerificationEmail()
+        userDao.updateSentEmail(
+            userId = userDao.getUser().id,
+            sentAt = OffsetDateTime.now(clock)
+        )
     }
 }
