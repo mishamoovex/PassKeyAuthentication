@@ -4,7 +4,7 @@ import com.aksio.core.data.db.db.dao.UserDao
 import com.aksio.core.data.db.db.models.UserEntity
 import com.aksio.core.data.firebase.auth.service.AuthenticationService
 import com.aksio.core.models.auth.RegistrationRequest
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
 internal class AuthenticationRepositoryImpl @Inject constructor(
@@ -14,9 +14,10 @@ internal class AuthenticationRepositoryImpl @Inject constructor(
 
     override suspend fun registerUser(request: RegistrationRequest) {
         val authResponse = authenticationService.register(request)
-        val creationTime = LocalDateTime.now()
+        val creationTime = OffsetDateTime.now()
         val user = UserEntity(
             email = authResponse.email,
+            isVerificationEmailSent = false,
             authProvider = authResponse.provider,
             createdAt = creationTime,
             lastLogin = creationTime

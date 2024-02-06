@@ -15,5 +15,5 @@ interface AuthenticationService {
 
     suspend fun sendVerificationEmail()
 
-    suspend fun isEmailVerified()
+    suspend fun isEmailVerified(): Boolean
 }

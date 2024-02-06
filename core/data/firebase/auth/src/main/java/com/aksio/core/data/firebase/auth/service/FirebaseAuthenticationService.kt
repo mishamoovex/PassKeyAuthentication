@@ -34,10 +34,14 @@ internal class FirebaseAuthenticationService @Inject constructor(
     }
 
     override suspend fun sendVerificationEmail() {
-        TODO("Not yet implemented")
+        authService.currentUser
+            ?.run { sendEmailVerification().await() }
+            ?: throw Exception("User not authenticated")
     }
 
-    override suspend fun isEmailVerified() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun isEmailVerified(): Boolean =
+        authService.currentUser
+            ?.run { isEmailVerified }
+            ?: throw Exception("User not authenticated")
+
 }

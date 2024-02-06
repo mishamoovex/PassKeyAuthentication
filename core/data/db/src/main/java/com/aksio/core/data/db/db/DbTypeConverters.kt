@@ -3,16 +3,16 @@
 package com.aksio.core.data.db.db
 
 import androidx.room.TypeConverter
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 internal class DbTypeConverters {
 
     @TypeConverter
-    fun fromLocalDateTimer(value: LocalDateTime?): String? = value?.toString()
+    fun fromLocalDateTimer(value: OffsetDateTime?): String? = value?.toString()
 
     @TypeConverter
-    fun toLocalDateTime(value: String?): LocalDateTime? = value?.let {
-        LocalDateTime.parse(value)
+    fun toLocalDateTime(value: String?): OffsetDateTime? = value?.let {
+        OffsetDateTime.parse(value)
     }
 
 }
