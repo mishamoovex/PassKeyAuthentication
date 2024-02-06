@@ -11,10 +11,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.aksio.core.common.state.TextMessage
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.sample
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,9 +39,10 @@ internal class MainScreenState(
     private val coroutineScope: CoroutineScope,
 ) {
 
+    @OptIn(FlowPreview::class)
     val isTopBarNavigationEnabled = navController.visibleEntries
+        .sample(periodMillis = 1000)
         .map { it.size > 1 }
-        .distinctUntilChanged()
         .stateIn(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(500),
