@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aksio.authentication.ui.navigation.MainNavHost
 import com.aksio.authentication.ui.screen.components.AppSnackbarHost
 import com.aksio.authentication.ui.state.MainScreenUiState
@@ -26,6 +28,7 @@ fun MainScreen(
 ) {
 
     val screenState = rememberMainScreenState()
+    val isBackEnabled by screenState.isTopBarNavigationEnabled.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -36,7 +39,8 @@ fun MainScreen(
         topBar = {
             Toolbar(
                 onBack = screenState.navController::navigateUp,
-                modifier = Modifier.statusBarsPadding()
+                modifier = Modifier.statusBarsPadding(),
+                isBackNavigationEnabled = isBackEnabled
             )
         }
     ) { paddings ->

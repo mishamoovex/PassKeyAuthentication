@@ -20,7 +20,8 @@ import com.aksio.core.designsystem.theme.AppTheme
 @Composable
 fun Toolbar(
     modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    isBackNavigationEnabled: Boolean
 ) {
     Box(
         modifier = modifier
@@ -28,29 +29,43 @@ fun Toolbar(
             .height(48.dp),
         contentAlignment = Alignment.CenterStart
     ) {
-        Box(
-            modifier = Modifier
-                .size(48.dp)
-                .clip(CircleShape)
-                .clickable(onClick = onBack),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_back_navigation),
-                contentDescription = "Back button",
-                modifier = Modifier.size(32.dp),
-                tint = AppTheme.colors.navigationButton
-            )
+        if (isBackNavigationEnabled) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .clickable(onClick = onBack),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_back_navigation),
+                    contentDescription = "Back button",
+                    modifier = Modifier.size(32.dp),
+                    tint = AppTheme.colors.navigationButton
+                )
+            }
         }
     }
 }
 
 @Composable
 @Preview
-private fun ToolbarPreview() {
+private fun ToolbarPreview_NotVisible() {
     AppTheme {
         Toolbar(
-            onBack = {}
+            onBack = {},
+            isBackNavigationEnabled = false
+        )
+    }
+}
+
+@Composable
+@Preview
+private fun ToolbarPreview_Visible() {
+    AppTheme {
+        Toolbar(
+            onBack = {},
+            isBackNavigationEnabled = true
         )
     }
 }
