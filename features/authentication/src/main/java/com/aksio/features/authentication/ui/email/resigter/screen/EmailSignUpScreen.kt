@@ -6,14 +6,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.aksio.core.common.state.TextMessage
 import com.aksio.core.designsystem.components.ActionableText
 import com.aksio.core.designsystem.components.AppTextField
 import com.aksio.core.designsystem.components.TextActionButton
@@ -24,23 +30,65 @@ import com.aksio.features.authentication.ui.email.resigter.state.EmailSignUpUiSt
 
 @Composable
 internal fun EmailSignUpScreen(
-    uiState: EmailSignUpUiState,
-    navigateUp: () -> Unit
+    viewModel: EmailSignUpVm = hiltViewModel(),
+    showMessage: (TextMessage) -> Unit,
+    navigateUp: () -> Unit,
+    toEmailVerification: () -> Unit,
+    toLogin: () -> Unit
 ) {
-    val context = LocalContext.current
-
-    Column(
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .padding(
                 bottom = 24.dp,
                 start = 16.dp,
                 end = 16.dp
+            ),
+        topBar = {
+            Toolbar(
+                onBack = navigateUp
             )
-    ) {
-        Toolbar(
-            onBack = navigateUp
+        }
+    ) { paddings ->
+
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+        val messages by viewModel.displayMessages.collectAsStateWithLifecycle()
+        val navigationState by viewModel.navigationState.collectAsStateWithLifecycle()
+
+        ScreenContent(
+            uiState = uiState,
+            modifier = Modifier.padding(paddings),
+            toLogin = toLogin
         )
+
+        messages.firstOrNull()?.let { message ->
+            LaunchedEffect(messages) {
+                showMessage(message)
+                viewModel.setMessageShown(message.id)
+            }
+        }
+
+        navigationState.args?.let { navArgs ->
+            LaunchedEffect(navArgs) {
+                toEmailVerification()
+                navigationState.onNavigated()
+            }
+        }
+    }
+}
+
+@Composable
+private fun ScreenContent(
+    modifier: Modifier = Modifier,
+    uiState: EmailSignUpUiState,
+    toLogin: () -> Unit
+) {
+    val context = LocalContext.current
+
+    Column(
+        modifier = modifier
+    ) {
+
         Spacer(
             modifier = Modifier.height(32.dp)
         )
@@ -95,7 +143,7 @@ internal fun EmailSignUpScreen(
         )
         ActionableText(
             actionableText = R.string.email_sing_up_action_login,
-            action = { TODO() },
+            action = toLogin,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -105,9 +153,9 @@ internal fun EmailSignUpScreen(
 @Preview
 private fun ScreenPreview() {
     AppTheme {
-        EmailSignUpScreen(
+        ScreenContent(
             uiState = EmailSignUpUiState(),
-            navigateUp = {}
+            toLogin = {}
         )
     }
 }

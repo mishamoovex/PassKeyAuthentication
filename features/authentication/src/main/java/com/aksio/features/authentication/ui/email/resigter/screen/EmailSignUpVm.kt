@@ -21,6 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -92,14 +93,15 @@ class EmailSignUpVm @Inject constructor(
         }
     }
 
-    private val navigationState = MutableStateFlow(
-        NavigationState<Unit>(
-            onNavigated = {}
+    private val _navigationState = MutableStateFlow(
+        NavigationState<Any>(
+            onNavigated = { setNavigationArgs(args = null) }
         )
     )
+    val navigationState = _navigationState.asStateFlow()
 
-    private fun setNavigationArgs(args: Unit?) {
-        navigationState.update { it.copy(args = args) }
+    private fun setNavigationArgs(args: Any?) {
+        _navigationState.update { it.copy(args = args) }
     }
 
     private val isLoadingState = MutableStateFlow(false)
@@ -108,9 +110,8 @@ class EmailSignUpVm @Inject constructor(
         emailState,
         passwordState,
         confirmationPasswordState,
-        isLoadingState,
-        navigationState
-    ) { email, password, confirmationPassword, isLoading, navigation ->
+        isLoadingState
+    ) { email, password, confirmationPassword, isLoading ->
 
         val updatedConfirmationPasswordState = confirmationPassword.copy(
             validationState = validateConfirmationPassword(
@@ -130,8 +131,7 @@ class EmailSignUpVm @Inject constructor(
                 isLoading = isLoading,
                 isEnabled = isDataValid,
                 onClicked = ::singUpWithEmail
-            ),
-            navigationState = navigation
+            )
         )
     }
         .catch { showError(it) }
@@ -174,7 +174,7 @@ class EmailSignUpVm @Inject constructor(
                 )
                 authenticationRepository.registerUser(request)
                 authenticationRepository.sendVerificationEmail()
-                setNavigationArgs(Unit)
+                setNavigationArgs(Any())
             }
         )
     }
