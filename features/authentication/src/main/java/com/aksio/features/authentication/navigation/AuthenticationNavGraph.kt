@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.aksio.core.common.state.TextMessage
+import com.aksio.features.authentication.ui.email.login.screen.EmailSingInScreen
 import com.aksio.features.authentication.ui.email.resigter.screen.EmailSignUpScreen
 import com.aksio.features.authentication.ui.welcome.screen.WelcomeScreen
 
@@ -31,8 +32,16 @@ fun NavGraphBuilder.navGraphAuthentication(
             EmailSignUpScreen(
                 showMessage = showMessage,
                 toEmailVerification = {},
-                toLogin = {}
+                toLogin = {
+                    navHostController.navigate(AuthNavGraph.EmailSignIn.route) {
+                        popUpTo(AuthNavGraph.EmailSignUp.route) { inclusive = true }
+                    }
+                }
             )
+        }
+
+        composable(AuthNavGraph.EmailSignIn.route) {
+            EmailSingInScreen()
         }
     }
 }

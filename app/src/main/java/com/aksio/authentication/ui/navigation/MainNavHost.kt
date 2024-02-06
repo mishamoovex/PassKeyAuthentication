@@ -1,5 +1,7 @@
 package com.aksio.authentication.ui.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -17,7 +19,9 @@ internal fun MainNavHost(
     NavHost(
         navController = navHostController,
         startDestination = startDestination,
-        modifier = modifier
+        modifier = modifier,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None }
     ) {
         navGraphAuthentication(
             graphRoute = MainGraph.Authentication.route,
