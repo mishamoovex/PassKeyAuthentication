@@ -9,7 +9,8 @@ android {
 }
 
 dependencies {
-    testImplementation(project(":core:tests-shared"))
+
+    testImplementation(project(":core:tests"))
 
     implementation(libs.android.lifecycle.vm)
 }

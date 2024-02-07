@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class CustomThemeColors(
+    val navigationButton: Color,
     val buttonPrimary: Color,
     val onPrimaryButton: Color,
     val onPrimaryButtonDisabled: Color,
@@ -58,7 +59,8 @@ internal val Orange = Color(0xFFEB6D54)
 internal val Red = Color(0xFFE3262F)
 
 
-internal val LightColorPalette = CustomThemeColors(
+internal val DarkColorPalette = CustomThemeColors(
+    navigationButton = White,
     buttonPrimary = Yellow,
     onPrimaryButton = Black,
     onPrimaryButtonDisabled = G100,

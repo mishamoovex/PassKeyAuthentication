@@ -23,11 +23,11 @@ class MainActivity : ComponentActivity() {
         installSplashScreen().setKeepOnScreenCondition { isSplashActive.get() }
 
         setContent {
-            val viewModel = hiltViewModel<MainScreenVm>()
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            val messageState by viewModel.displayMessages.collectAsStateWithLifecycle()
-
             AppTheme {
+                val viewModel = hiltViewModel<MainScreenVm>()
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val messageState by viewModel.displayMessages.collectAsStateWithLifecycle()
+
                 MainScreen(
                     uiState = uiState,
                     messages = messageState,

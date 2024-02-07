@@ -5,20 +5,23 @@ import androidx.lifecycle.viewModelScope
 import com.aksio.core.common.constants.Constants.PASSWORD_LENGTH
 import com.aksio.core.common.core.messenger.error.ErrorMessenger
 import com.aksio.core.common.state.ActionButtonState
+import com.aksio.core.common.state.NavigationState
 import com.aksio.core.common.state.TextFieldState
 import com.aksio.core.common.state.TextMessage
 import com.aksio.core.common.state.ValidationState
 import com.aksio.core.common.vm.executeAction
+import com.aksio.core.models.auth.RegistrationRequest
+import com.aksio.core.repository.authentication.repository.AuthenticationRepository
 import com.aksio.features.authentication.R
 import com.aksio.features.authentication.di.EmailValidator
 import com.aksio.features.authentication.di.PasswordValidator
 import com.aksio.features.authentication.domain.validation.StringValidationUseCase
 import com.aksio.features.authentication.ui.email.resigter.state.EmailSignUpUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -29,6 +32,7 @@ import javax.inject.Inject
 class EmailSignUpVm @Inject constructor(
     @EmailValidator private val validateEmailUseCase: StringValidationUseCase,
     @PasswordValidator private val validatePasswordUseCase: StringValidationUseCase,
+    private val authenticationRepository: AuthenticationRepository,
     private val messenger: ErrorMessenger
 ) : ViewModel(),
     ErrorMessenger by messenger {
@@ -87,6 +91,17 @@ class EmailSignUpVm @Inject constructor(
         confirmationPasswordState.update {
             it.copy(value = password)
         }
+    }
+
+    private val _navigationState = MutableStateFlow(
+        NavigationState<Any>(
+            onNavigated = { setNavigationArgs(args = null) }
+        )
+    )
+    val navigationState = _navigationState.asStateFlow()
+
+    private fun setNavigationArgs(args: Any?) {
+        _navigationState.update { it.copy(args = args) }
     }
 
     private val isLoadingState = MutableStateFlow(false)
@@ -151,7 +166,16 @@ class EmailSignUpVm @Inject constructor(
     private fun singUpWithEmail() {
         executeAction(
             onLoading = { isLoading -> isLoadingState.update { isLoading } },
-            execute = { delay(1500) }
+            execute = {
+                val state = uiState.value
+                val request = RegistrationRequest.Password(
+                    email = state.emailState.value,
+                    password = state.passwordState.value
+                )
+                authenticationRepository.registerUser(request)
+                authenticationRepository.sendVerificationEmail()
+                setNavigationArgs(Any())
+            }
         )
     }
 
