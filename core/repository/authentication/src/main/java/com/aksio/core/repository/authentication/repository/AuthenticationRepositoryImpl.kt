@@ -26,6 +26,14 @@ internal class AuthenticationRepositoryImpl @Inject constructor(
         userDao.insert(user)
     }
 
+    override suspend fun isAuthenticated(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun isEmailVerificationSent(): Boolean {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun sendVerificationEmail() {
         authenticationService.sendVerificationEmail()
         userDao.updateSentEmail(

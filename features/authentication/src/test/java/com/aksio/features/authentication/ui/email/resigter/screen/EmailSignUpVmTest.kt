@@ -1,6 +1,10 @@
 package com.aksio.features.authentication.ui.email.resigter.screen
 
 import com.aksio.core.tests_shared.MainDispatcherRule
+import com.aksio.core.tests_shared.fake.common.FakeClock
+import com.aksio.core.tests_shared.fake.common.FakeErrorMessenger
+import com.aksio.core.tests_shared.fake.repository.FakeAuthenticationRepository
+import com.aksio.features.authentication.fake.FakeStringValidation
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -10,11 +14,25 @@ internal class EmailSignUpVmTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
+    private val clock = FakeClock()
+    private lateinit var messenger: FakeErrorMessenger
+    private lateinit var emailValidationUseCase: FakeStringValidation
+    private lateinit var passwordValidationUseCase: FakeStringValidation
+    private lateinit var authenticationRepository: FakeAuthenticationRepository
     private lateinit var viewModel: EmailSignUpVm
 
     @Before
-    fun setUp(){
-
+    fun setUp() {
+        messenger = FakeErrorMessenger()
+        emailValidationUseCase = FakeStringValidation()
+        passwordValidationUseCase = FakeStringValidation()
+        authenticationRepository = FakeAuthenticationRepository(clock)
+        viewModel = EmailSignUpVm(
+            validateEmailUseCase = emailValidationUseCase,
+            validatePasswordUseCase = passwordValidationUseCase,
+            messenger = messenger,
+            authenticationRepository = authenticationRepository
+        )
     }
 
     //////////// Email state tests ///////////////
