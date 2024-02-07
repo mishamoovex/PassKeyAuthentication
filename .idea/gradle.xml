@@ -12,13 +12,13 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/common/designsystem" />
             <option value="$PROJECT_DIR$/core/common/features" />
             <option value="$PROJECT_DIR$/core/common/utilities" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/data/db" />
             <option value="$PROJECT_DIR$/core/data/firebase" />
             <option value="$PROJECT_DIR$/core/data/firebase/auth" />
-            <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/core/models" />
             <option value="$PROJECT_DIR$/core/repository" />
             <option value="$PROJECT_DIR$/core/repository/authentication" />
