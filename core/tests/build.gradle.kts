@@ -11,5 +11,6 @@ android {
 dependencies {
     implementation(project(":core:models"))
     implementation(project(":core:common"))
+    implementation(project(":core:utilities"))
     implementation(libs.bundles.testing.unit)
 }
