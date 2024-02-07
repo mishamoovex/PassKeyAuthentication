@@ -200,9 +200,7 @@ internal class EmailSignUpVmTest {
             //Given a fresh ViewModel
             //When verifying initial state
             //Than the confirmation password validation state should be Pending
-            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(
-                ValidationState.Pending
-            )
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Pending)
         }
 
     @Test
@@ -216,9 +214,7 @@ internal class EmailSignUpVmTest {
             viewModel.uiState.value.passwordState.onValueChanged(password)
             viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
             //Than the confirmation password validation state should be Pending
-            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(
-                ValidationState.Pending
-            )
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Pending)
         }
 
     @Test
@@ -252,9 +248,7 @@ internal class EmailSignUpVmTest {
             viewModel.uiState.value.passwordState.onValueChanged(password)
             viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
             //Than the confirmation password validation state should be Valid
-            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(
-                ValidationState.Valid
-            )
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Valid)
         }
 
     //////////// Action button state tests ///////////////
@@ -331,7 +325,7 @@ internal class EmailSignUpVmTest {
     //////////// Navigation state tests ///////////////
 
     @Test
-    fun `SHOULD set navigation event WHEN signUp() request completed`() {
+    fun `SHOULD set navigation args WHEN signUp() request completed`() {
         //Given a valid user input
         setValidUserInput()
         //When the sign up request completed
@@ -341,8 +335,8 @@ internal class EmailSignUpVmTest {
     }
 
     @Test
-    fun `SHOUlD clean up navigation event WHEN navigated`() {
-        //Given an active navigation event
+    fun `SHOUlD clean up navigation args WHEN navigated`() {
+        //Given an valid user input
         setValidUserInput()
         viewModel.uiState.value.actionButtonState.onClicked()
         //When onNavigated callback invoked
