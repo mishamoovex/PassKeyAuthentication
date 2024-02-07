@@ -1,11 +1,13 @@
 package com.aksio.features.authentication.ui.email.resigter.screen
 
+import com.aksio.core.common.state.TextMessage
 import com.aksio.core.common.state.ValidationState
 import com.aksio.core.tests_shared.MainDispatcherRule
 import com.aksio.core.tests_shared.fake.common.FakeClock
 import com.aksio.core.tests_shared.fake.common.FakeErrorMessenger
 import com.aksio.core.tests_shared.fake.repository.FakeAuthenticationRepository
 import com.aksio.core.tests_shared.util.setFlowCollector
+import com.aksio.features.authentication.R
 import com.aksio.features.authentication.fake.FakeStringValidation
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
@@ -172,4 +174,71 @@ internal class EmailSignUpVmTest {
         viewModel.uiState.value.passwordState.validationState.shouldBe(ValidationState.Valid)
     }
 
+    //////////// Confirmation password state tests ///////////////
+
+    @Test
+    fun `SHOULD set empty string as confirmation password WHEN confirmation password state created`() =
+        runTest {
+            //Given a fresh ViewModel
+            //When verifying initial state
+            //Than the confirmation password state text value should be an empty string
+            viewModel.uiState.value.passwordConfirmationState.value.shouldBeEmpty()
+        }
+
+    @Test
+    fun `SHOULD set confirmation password validation state Pending WHEN confirmation password state created`() =
+        runTest {
+            //Given a fresh ViewModel
+            //When verifying initial state
+            //Than the confirmation password validation state should be Pending
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Pending)
+        }
+
+    @Test
+    fun `SHOULD set confirmation password validation state Pending WHEN confirmationPassword length and password length are not equal`() =
+        runTest {
+            setFlowCollector(viewModel.uiState)
+            //Given a password and confirmation password that have a different length
+            val password = "1234567"
+            val confirmationPassword = "123"
+            //When passwords are set
+            viewModel.uiState.value.passwordState.onValueChanged(password)
+            viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
+            //Than the confirmation password validation state should be Pending
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Pending)
+        }
+
+    @Test
+    fun `SHOULD set confirmation password validation state Invalid WHEN confirmation password and password are not equal`() =
+        runTest {
+            setFlowCollector(viewModel.uiState)
+            //Given a password and a confirmation password that have the same length
+            //but aren't equal
+            val password = "123456"
+            val confirmationPassword = "12345Q"
+            //When passwords are set
+            viewModel.uiState.value.passwordState.onValueChanged(password)
+            viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
+            //Than the confirmation password validation state should be Invalid
+            val state = ValidationState.Invalid(
+                errorMessage = TextMessage.ResourceMessage(
+                    templateRes = R.string.text_validation_error_password_confirmation
+                )
+            )
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(state)
+        }
+
+    @Test
+    fun `SHOULD set confirmation password validation state Valid WHEN confirmation password and password are equal and valid`() =
+        runTest {
+            setFlowCollector(viewModel.uiState)
+            //Given a password and confirmation password that are equal and valid
+            val password = "1234qQ"
+            val confirmationPassword = "1234qQ"
+            //When passwords are set
+            viewModel.uiState.value.passwordState.onValueChanged(password)
+            viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
+            //Than the confirmation password validation state should be Valid
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Valid)
+        }
 }
