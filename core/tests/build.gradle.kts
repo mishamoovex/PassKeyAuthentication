@@ -11,5 +11,7 @@ android {
 dependencies {
     implementation(project(":core:models"))
     implementation(project(":core:common"))
+    implementation(project(":core:utilities"))
+    implementation(project(":core:repository:authentication"))
     implementation(libs.bundles.testing.unit)
 }

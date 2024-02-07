@@ -16,7 +16,6 @@ class FakeErrorMessenger(
 
     override fun showError(throwable: Throwable) {
         messageQueue.update { currentMessages -> currentMessages + errorMessage }
-
     }
 
     override fun showMessage(message: TextMessage) {
