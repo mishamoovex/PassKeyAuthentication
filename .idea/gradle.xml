@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/common/utilities" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/data/db" />
             <option value="$PROJECT_DIR$/core/data/firebase" />
@@ -21,7 +23,6 @@
             <option value="$PROJECT_DIR$/core/repository" />
             <option value="$PROJECT_DIR$/core/repository/authentication" />
             <option value="$PROJECT_DIR$/core/tests" />
-            <option value="$PROJECT_DIR$/core/utilities" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/authentication" />
             <option value="$PROJECT_DIR$/features/home" />

@@ -5,5 +5,5 @@ plugins {
 apply(from = "$rootDir/gradle/common-android.gradle")
 
 android {
-    namespace = "com.aksio.core.hilt"
+    namespace = "com.aksio.core.common.utilities"
 }
