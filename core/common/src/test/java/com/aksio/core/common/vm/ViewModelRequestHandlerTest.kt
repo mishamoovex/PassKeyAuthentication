@@ -16,6 +16,8 @@ import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ViewModelRequestHandlerTest {
@@ -40,51 +42,51 @@ class ViewModelRequestHandlerTest {
     @Test
     fun `SHOULD trigger execute() WHEN execution starts`() = runTest {
         //Given a request counter to verify that execution starts
-        var requestCounter = 0
+        val requestCounter = AtomicInteger(0)
         //When a request execution starts
-        viewModel.executeAction { requestCounter++ }
+        viewModel.executeAction { requestCounter.set(requestCounter.get() + 1) }
         //Than the request count should be increased
-        requestCounter.shouldBe(expected = 1)
+        requestCounter.get().shouldBe(expected = 1)
     }
 
     @Test
     fun `SHOULD set isLoading(true) WHEN execution starts`() = runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         //Given an inactive loader state
-        var isLoading = false
+        val isLoading = AtomicBoolean(false)
         //When a request execution starts
         viewModel.executeAction(
-            onLoading = { isLoading = it },
+            onLoading = { isLoading.set(it) },
             execute = {}
         )
         //Then the loader state should be set True
-        isLoading.shouldBeTrue()
+        isLoading.get().shouldBeTrue()
     }
 
     @Test
     fun `SHOULD set isLoading(false) WHEN execution completes`() = runTest {
         //Given an active loader state
-        var isLoading = true
+        val isLoading = AtomicBoolean(true)
         //When a request execution completes
         viewModel.executeAction(
-            onLoading = { isLoading = it },
+            onLoading = { isLoading.set(it) },
             execute = {}
         )
         //Then the loader state should be set True
-        isLoading.shouldBeFalse()
+        isLoading.get().shouldBeFalse()
     }
 
     @Test
     fun `SHOULD set isLoading(false) WHEN execution completes with an exception`() = runTest {
         //Given an active loader state
-        var isLoading = true
+        val isLoading = AtomicBoolean(true)
         //When a request execution completes with an exception
         viewModel.executeAction(
-            onLoading = { isLoading = it },
+            onLoading = { isLoading.set(it) },
             execute = { throw Exception() }
         )
         //Then the loader state should be set True
-        isLoading.shouldBeFalse()
+        isLoading.get().shouldBeFalse()
     }
 
     @Test
@@ -102,14 +104,14 @@ class ViewModelRequestHandlerTest {
     fun `SHOULD trigger onError() WHEN execution completes with an exception and onError callback is provided`() =
         runTest {
             //Given a request counter to verify that onError() handler invoked
-            var requestCounter = 0
+            val requestCounter = AtomicInteger(0)
             //When a request execution completes with an exception
             viewModel.executeAction(
-                onError = { requestCounter++ },
+                onError = { requestCounter.set(requestCounter.get() + 1) },
                 execute = { throw Exception() }
             )
             //Than the request count should be increased
-            requestCounter.shouldBe(expected = 1)
+            requestCounter.get().shouldBe(expected = 1)
         }
 
 }
