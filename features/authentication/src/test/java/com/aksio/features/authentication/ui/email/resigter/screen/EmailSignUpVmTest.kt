@@ -53,11 +53,11 @@ internal class EmailSignUpVmTest {
     @Test
     fun `SHOULD update email value WHEN new value of required length is set`() = runTest {
         setFlowCollector(viewModel.uiState)
-        //Given a valid email
+        //Given an email of required length
         val newEmail = "some@gmail.com"
-        //When new email is set
+        //When a new email is set
         viewModel.uiState.value.emailState.onValueChanged(newEmail)
-        //Than the email state value should then be updated to the new email
+        //Than the email state value should then be updated
         viewModel.uiState.value.emailState.value.shouldBe(newEmail)
     }
 
@@ -65,7 +65,7 @@ internal class EmailSignUpVmTest {
     fun `SHOULD set email validation state Pending WHEN email state created`() = runTest {
         //Given a fresh ViewModel
         //When verifying initial state
-        //Than the validation state should be Pending
+        //Than the email validation state should be Pending
         viewModel.uiState.value.emailState.validationState.shouldBe(ValidationState.Pending)
     }
 
@@ -75,36 +75,22 @@ internal class EmailSignUpVmTest {
             setFlowCollector(viewModel.uiState)
             //Given a string of length less then required
             val value = "1234"
-            //When new value is set
+            //When a new value is set
             viewModel.uiState.value.emailState.onValueChanged(value)
-            //Than the validation state should be Pending
+            //Than the email validation state should be Pending
             viewModel.uiState.value.emailState.validationState.shouldBe(ValidationState.Pending)
         }
 
     @Test
-    fun `SHOULD set email validation state Invalid WHEN email length longer than required`() =
+    fun `SHOULD set email validation state Invalid WHEN email is not valid`() =
         runTest {
             setFlowCollector(viewModel.uiState)
-            //Given a string of length longer then required
-            val value = "1234567"
-            //When new value is set
+            //Given an invalid email
+            val value = "emailcom"
+            //When a new value is set
             emailValidationUseCase.isValid(isValid = false)
             viewModel.uiState.value.emailState.onValueChanged(value)
-            //Than the validation state should be Invalid
-            val expectedState = ValidationState.Invalid(emailValidationUseCase.errorMessage)
-            viewModel.uiState.value.emailState.validationState.shouldBe(expectedState)
-        }
-
-    @Test
-    fun `SHOULD set email validation state Invalid WHEN email length equals required length and not valid`() =
-        runTest {
-            setFlowCollector(viewModel.uiState)
-            //Given an string that represents an email of required length
-            val value = "123456"
-            //When new value is set
-            emailValidationUseCase.isValid(isValid = false)
-            viewModel.uiState.value.emailState.onValueChanged(value)
-            //Than the validation state should be Invalid
+            //Than the email validation state should be Invalid
             val expectedState = ValidationState.Invalid(emailValidationUseCase.errorMessage)
             viewModel.uiState.value.emailState.validationState.shouldBe(expectedState)
         }
@@ -114,12 +100,76 @@ internal class EmailSignUpVmTest {
         setFlowCollector(viewModel.uiState)
         //Given a valid email
         val value = "some@gmail.com"
-        //When new email is set
+        //When a new email is set
         viewModel.uiState.value.emailState.onValueChanged(value)
-        //Than the validation state should be Valid
+        //Than the email validation state should be Valid
         viewModel.uiState.value.emailState.validationState.shouldBe(ValidationState.Valid)
     }
 
     //////////// Password state tests ///////////////
+
+    @Test
+    fun `SHOULD set empty string as password WHEN password state created`() = runTest {
+        //Given a fresh ViewModel
+        //When verifying initial state
+        //Than the password state text value should be an empty string
+        viewModel.uiState.value.passwordState.value.shouldBeEmpty()
+    }
+
+    @Test
+    fun `SHOULD update password value WHEN new value of required length is set`() = runTest {
+        setFlowCollector(viewModel.uiState)
+        //Given a password of required length
+        val newPassword = "123456"
+        //When a new password is set
+        viewModel.uiState.value.passwordState.onValueChanged(newPassword)
+        //Than the password state value should then be updated
+        viewModel.uiState.value.passwordState.value.shouldBe(newPassword)
+    }
+
+    @Test
+    fun `SHOULD set password validation state Pending WHEN password state created`() = runTest {
+        //Given a fresh ViewModel
+        //When verifying initial state
+        //Than the password validation state should be Pending
+        viewModel.uiState.value.passwordState.validationState.shouldBe(ValidationState.Pending)
+    }
+
+    @Test
+    fun `SHOULD set password validation state Pending WHEN password length less than required`() =
+        runTest {
+            setFlowCollector(viewModel.uiState)
+            //Given a string of length less then required
+            val value = "1234"
+            //When a new value is set
+            viewModel.uiState.value.passwordState.onValueChanged(value)
+            //Than the password validation state should be Pending
+            viewModel.uiState.value.passwordState.validationState.shouldBe(ValidationState.Pending)
+        }
+
+    @Test
+    fun `SHOULD set password validation state Invalid WHEN password is not valid`() =
+        runTest {
+            setFlowCollector(viewModel.uiState)
+            //Given an invalid password
+            val value = "1234567"
+            //When a new value is set
+            passwordValidationUseCase.isValid(isValid = false)
+            viewModel.uiState.value.passwordState.onValueChanged(value)
+            //Than the password validation state should be Invalid
+            val expectedState = ValidationState.Invalid(passwordValidationUseCase.errorMessage)
+            viewModel.uiState.value.passwordState.validationState.shouldBe(expectedState)
+        }
+
+    @Test
+    fun `SHOULD set password validation state Valid WHEN password is valid`() = runTest {
+        setFlowCollector(viewModel.uiState)
+        //Given a valid password
+        val value = "1234qQ"
+        //When a new value is set
+        viewModel.uiState.value.passwordState.onValueChanged(value)
+        //Than the password validation state should be Valid
+        viewModel.uiState.value.passwordState.validationState.shouldBe(ValidationState.Valid)
+    }
 
 }
