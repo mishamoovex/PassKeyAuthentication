@@ -6,9 +6,12 @@ import com.aksio.core.tests_shared.MainDispatcherRule
 import com.aksio.core.tests_shared.fake.common.FakeClock
 import com.aksio.core.tests_shared.fake.common.FakeErrorMessenger
 import com.aksio.core.tests_shared.fake.repository.FakeAuthenticationRepository
+import com.aksio.core.tests_shared.util.collectFromFlow
 import com.aksio.core.tests_shared.util.setFlowCollector
 import com.aksio.features.authentication.R
 import com.aksio.features.authentication.fake.FakeStringValidation
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import kotlinx.coroutines.test.runTest
@@ -191,7 +194,9 @@ internal class EmailSignUpVmTest {
             //Given a fresh ViewModel
             //When verifying initial state
             //Than the confirmation password validation state should be Pending
-            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Pending)
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(
+                ValidationState.Pending
+            )
         }
 
     @Test
@@ -205,7 +210,9 @@ internal class EmailSignUpVmTest {
             viewModel.uiState.value.passwordState.onValueChanged(password)
             viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
             //Than the confirmation password validation state should be Pending
-            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Pending)
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(
+                ValidationState.Pending
+            )
         }
 
     @Test
@@ -239,6 +246,53 @@ internal class EmailSignUpVmTest {
             viewModel.uiState.value.passwordState.onValueChanged(password)
             viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
             //Than the confirmation password validation state should be Valid
-            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(ValidationState.Valid)
+            viewModel.uiState.value.passwordConfirmationState.validationState.shouldBe(
+                ValidationState.Valid
+            )
         }
+
+    //////////// Action button state tests ///////////////
+
+    @Test
+    fun `SHOULD set isLoading = False WHEN action button state created`() = runTest {
+        //Given a fresh ViewModel
+        //When verifying an initial state
+        //Than isLoading should be False
+        viewModel.uiState.value.actionButtonState.isLoading.shouldBeFalse()
+    }
+
+    @Test
+    fun `SHOULD set isLoading = True WHEN signUp() request launched`() = runTest {
+        val states = collectFromFlow(viewModel.uiState)
+        //Given an initial loading state
+        //When the sign up request is started
+        viewModel.uiState.value.actionButtonState.onClicked()
+        //Than the loading state should be changed
+        states.any { it.actionButtonState.isLoading }.shouldBeTrue()
+    }
+
+    @Test
+    fun `SHOULD set isEnabled = False WHEN action button state created`() = runTest {
+        //Given a fresh ViewModel
+        //When verifying an initial state
+        //Than isEnabled should be False
+        viewModel.uiState.value.actionButtonState.isEnabled.shouldBeFalse()
+    }
+
+    @Test
+    fun `SHOULD set isEnabled = True WHEN required input data are Valid`() = runTest {
+        setFlowCollector(viewModel.uiState)
+        //Given a valid user input
+        val email = "some@gmail.com"
+        val password = "1234qQ"
+        val confirmationPassword = "1234qQ"
+        //When all inputs are set
+        viewModel.uiState.value.emailState.onValueChanged(email)
+        viewModel.uiState.value.passwordState.onValueChanged(password)
+        viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
+        //Than the action button isEnabled state should be True
+        viewModel.uiState.value.actionButtonState.isEnabled.shouldBeTrue()
+    }
+
+
 }

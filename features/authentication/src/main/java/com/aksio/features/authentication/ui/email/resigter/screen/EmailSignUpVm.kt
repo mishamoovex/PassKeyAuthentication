@@ -142,7 +142,9 @@ class EmailSignUpVm @Inject constructor(
                 emailState = emailState.value,
                 passwordState = passwordState.value,
                 passwordConfirmationState = confirmationPasswordState.value,
-                actionButtonState = ActionButtonState()
+                actionButtonState = ActionButtonState(
+                    onClicked = ::singUpWithEmail
+                )
             )
         )
 
