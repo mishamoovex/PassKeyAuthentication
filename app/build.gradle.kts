@@ -40,8 +40,8 @@ android {
 
 dependencies {
     implementation(project(":core:models"))
-    implementation(project(":core:common"))
-    implementation(project(":core:designsystem"))
+    implementation(project(":core:common:features"))
+    implementation(project(":core:common:designsystem"))
     implementation(project(":core:repository:authentication"))
     implementation(project(":features:authentication"))
     implementation(project(":features:home"))

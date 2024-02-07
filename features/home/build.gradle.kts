@@ -9,6 +9,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:repository:authentication"))
+    implementation(project(":core:common:designsystem"))
 }

@@ -2,7 +2,7 @@ package com.aksio.core.common.state
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.aksio.core.common.R
+import com.aksio.core.common.features.R
 import java.util.UUID
 
 sealed class TextMessage(
