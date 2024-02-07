@@ -5,7 +5,7 @@ plugins {
 apply(from = "$rootDir/gradle/common-android.gradle")
 
 android {
-    namespace = "com.aksio.core.common"
+    namespace = "com.aksio.core.common.features"
 }
 
 dependencies {
