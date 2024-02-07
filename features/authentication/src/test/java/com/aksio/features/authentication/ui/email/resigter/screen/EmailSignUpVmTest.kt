@@ -12,6 +12,9 @@ import com.aksio.features.authentication.R
 import com.aksio.features.authentication.fake.FakeStringValidation
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.collections.shouldContainOnly
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import kotlinx.coroutines.test.runTest
@@ -20,6 +23,11 @@ import org.junit.Rule
 import org.junit.Test
 
 internal class EmailSignUpVmTest {
+
+    private companion object {
+        const val validEmail = "some@gmail.com"
+        const val validPassword = "1234qQ"
+    }
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -59,7 +67,7 @@ internal class EmailSignUpVmTest {
     fun `SHOULD update email value WHEN new value of required length is set`() = runTest {
         setFlowCollector(viewModel.uiState)
         //Given an email of required length
-        val newEmail = "some@gmail.com"
+        val newEmail = validEmail
         //When a new email is set
         viewModel.uiState.value.emailState.onValueChanged(newEmail)
         //Than the email state value should then be updated
@@ -104,9 +112,8 @@ internal class EmailSignUpVmTest {
     fun `SHOULD set email validation state Valid WHEN email is valid`() = runTest {
         setFlowCollector(viewModel.uiState)
         //Given a valid email
-        val value = "some@gmail.com"
         //When a new email is set
-        viewModel.uiState.value.emailState.onValueChanged(value)
+        viewModel.uiState.value.emailState.onValueChanged(validEmail)
         //Than the email validation state should be Valid
         viewModel.uiState.value.emailState.validationState.shouldBe(ValidationState.Valid)
     }
@@ -125,7 +132,7 @@ internal class EmailSignUpVmTest {
     fun `SHOULD update password value WHEN new value of required length is set`() = runTest {
         setFlowCollector(viewModel.uiState)
         //Given a password of required length
-        val newPassword = "123456"
+        val newPassword = validPassword
         //When a new password is set
         viewModel.uiState.value.passwordState.onValueChanged(newPassword)
         //Than the password state value should then be updated
@@ -170,9 +177,8 @@ internal class EmailSignUpVmTest {
     fun `SHOULD set password validation state Valid WHEN password is valid`() = runTest {
         setFlowCollector(viewModel.uiState)
         //Given a valid password
-        val value = "1234qQ"
         //When a new value is set
-        viewModel.uiState.value.passwordState.onValueChanged(value)
+        viewModel.uiState.value.passwordState.onValueChanged(validPassword)
         //Than the password validation state should be Valid
         viewModel.uiState.value.passwordState.validationState.shouldBe(ValidationState.Valid)
     }
@@ -240,8 +246,8 @@ internal class EmailSignUpVmTest {
         runTest {
             setFlowCollector(viewModel.uiState)
             //Given a password and confirmation password that are equal and valid
-            val password = "1234qQ"
-            val confirmationPassword = "1234qQ"
+            val password = validPassword
+            val confirmationPassword = validPassword
             //When passwords are set
             viewModel.uiState.value.passwordState.onValueChanged(password)
             viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
@@ -283,16 +289,72 @@ internal class EmailSignUpVmTest {
     fun `SHOULD set isEnabled = True WHEN required input data are Valid`() = runTest {
         setFlowCollector(viewModel.uiState)
         //Given a valid user input
-        val email = "some@gmail.com"
-        val password = "1234qQ"
-        val confirmationPassword = "1234qQ"
         //When all inputs are set
-        viewModel.uiState.value.emailState.onValueChanged(email)
-        viewModel.uiState.value.passwordState.onValueChanged(password)
-        viewModel.uiState.value.passwordConfirmationState.onValueChanged(confirmationPassword)
+        setValidUserInput()
         //Than the action button isEnabled state should be True
         viewModel.uiState.value.actionButtonState.isEnabled.shouldBeTrue()
     }
 
+    //////////// Register user tests ///////////////
+
+    @Test
+    fun `SHOULD register a new user WHEN signUp() request launched`() = runTest {
+        //Given a valid user input
+        setValidUserInput()
+        //When the sign up request launched
+        viewModel.uiState.value.actionButtonState.onClicked()
+        //Then a new user should be created
+        authenticationRepository.isAuthenticated().shouldBeTrue()
+    }
+
+    @Test
+    fun `SHOULD send a verification email WHEN user authorized`() = runTest {
+        //Given a valid user input
+        setValidUserInput()
+        //When a user authorized
+        viewModel.uiState.value.actionButtonState.onClicked()
+        //Then a verification email should be sent
+        authenticationRepository.isEmailVerificationSent().shouldBeTrue()
+    }
+
+    @Test
+    fun `SHOULD set a display error WHEN signUp() request failed`() {
+        //Given a valid user input
+        setValidUserInput()
+        //When the sign up request failed
+        authenticationRepository.shouldThrowException(isFailedRequest = true)
+        viewModel.uiState.value.actionButtonState.onClicked()
+        //Then a display error should be set
+        messenger.displayMessages.value.shouldContainOnly(messenger.errorMessage)
+    }
+
+    //////////// Navigation state tests ///////////////
+
+    @Test
+    fun `SHOULD set navigation event WHEN signUp() request completed`() {
+        //Given a valid user input
+        setValidUserInput()
+        //When the sign up request completed
+        viewModel.uiState.value.actionButtonState.onClicked()
+        //Then a navigation args should be set
+        viewModel.navigationState.value.args.shouldNotBeNull()
+    }
+
+    @Test
+    fun `SHOUlD clean up navigation event WHEN navigated`() {
+        //Given an active navigation event
+        setValidUserInput()
+        viewModel.uiState.value.actionButtonState.onClicked()
+        //When onNavigated callback invoked
+        viewModel.navigationState.value.onNavigated()
+        //Then the navigation args should be removed
+        viewModel.navigationState.value.args.shouldBeNull()
+    }
+
+    private fun setValidUserInput() {
+        viewModel.uiState.value.emailState.onValueChanged(validEmail)
+        viewModel.uiState.value.passwordState.onValueChanged(validPassword)
+        viewModel.uiState.value.passwordConfirmationState.onValueChanged(validPassword)
+    }
 
 }
