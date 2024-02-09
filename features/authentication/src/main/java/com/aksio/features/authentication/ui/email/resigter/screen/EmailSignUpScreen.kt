@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,9 +38,6 @@ internal fun EmailSignUpScreen(
 
     ScreenContent(
         uiState = uiState,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 32.dp),
         toLogin = toLogin
     )
 
@@ -69,12 +65,8 @@ private fun ScreenContent(
     val context = LocalContext.current
 
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
-
-        Spacer(
-            modifier = Modifier.height(32.dp)
-        )
         Text(
             text = stringResource(R.string.email_sing_up_header),
             style = AppTheme.typography.title,

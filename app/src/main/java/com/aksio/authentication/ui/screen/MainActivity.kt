@@ -3,11 +3,8 @@ package com.aksio.authentication.ui.screen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aksio.core.designsystem.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.atomic.AtomicBoolean
@@ -24,14 +21,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                val viewModel = hiltViewModel<MainScreenVm>()
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-                val messageState by viewModel.displayMessages.collectAsStateWithLifecycle()
-
                 MainScreen(
-                    uiState = uiState,
-                    messages = messageState,
-                    onMessageShown = viewModel::setMessageShown,
                     hideSplashScreen = { isSplashActive.set(false) }
                 )
             }

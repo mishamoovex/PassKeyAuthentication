@@ -8,10 +8,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.aksio.core.common.state.TextMessage
 import com.aksio.features.authentication.navigation.navGraphAuthentication
+import com.aksio.features.home.navigation.navGraphHome
 
 @Composable
 internal fun MainNavHost(
     startDestination: String,
+    emailVerificationRequired: Boolean,
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
     showMessage: (TextMessage) -> Unit
@@ -26,7 +28,18 @@ internal fun MainNavHost(
         navGraphAuthentication(
             graphRoute = MainGraph.Authentication.route,
             showMessage = showMessage,
-            navHostController = navHostController
+            navHostController = navHostController,
+            emailVerificationRequired = emailVerificationRequired
+        )
+        navGraphHome(
+            graphRoute = MainGraph.Home.route
         )
     }
+}
+
+sealed class MainGraph(open val route: String) {
+
+    data object Authentication : MainGraph(route = "graphAuthentication")
+
+    data object Home : MainGraph(route = "graphHome")
 }
