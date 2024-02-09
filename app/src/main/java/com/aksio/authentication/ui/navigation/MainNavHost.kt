@@ -12,6 +12,7 @@ import com.aksio.features.authentication.navigation.navGraphAuthentication
 @Composable
 internal fun MainNavHost(
     startDestination: String,
+    emailVerificationRequired: Boolean,
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
     showMessage: (TextMessage) -> Unit
@@ -26,7 +27,9 @@ internal fun MainNavHost(
         navGraphAuthentication(
             graphRoute = MainGraph.Authentication.route,
             showMessage = showMessage,
-            navHostController = navHostController
+            navHostController = navHostController,
+            emailVerificationRequired = emailVerificationRequired
         )
+
     }
 }

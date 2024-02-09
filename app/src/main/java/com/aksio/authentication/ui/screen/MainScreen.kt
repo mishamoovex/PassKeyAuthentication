@@ -9,26 +9,23 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aksio.authentication.ui.navigation.MainNavHost
 import com.aksio.authentication.ui.screen.components.AppSnackbarHost
-import com.aksio.authentication.ui.state.MainScreenUiState
 import com.aksio.authentication.ui.state.rememberMainScreenState
-import com.aksio.core.common.state.TextMessage
 import com.aksio.core.designsystem.components.Toolbar
 import com.aksio.core.designsystem.theme.AppTheme
-import java.util.UUID
 
 @Composable
 fun MainScreen(
-    uiState: MainScreenUiState,
-    messages: List<TextMessage>,
-    onMessageShown: (UUID) -> Unit,
+    viewModel: MainScreenVm = hiltViewModel(),
     hideSplashScreen: () -> Unit
 ) {
-
     val screenState = rememberMainScreenState()
     val isBackEnabled by screenState.isTopBarNavigationEnabled.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val messages by viewModel.displayMessages.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -44,9 +41,10 @@ fun MainScreen(
             )
         }
     ) { paddings ->
-        if (uiState.route != null) {
+
+        uiState.route?.let { startDestination ->
             MainNavHost(
-                startDestination = uiState.route,
+                startDestination = startDestination,
                 navHostController = screenState.navController,
                 modifier = Modifier
                     .padding(paddings)
@@ -56,6 +54,7 @@ fun MainScreen(
                         end = 16.dp
                     ),
                 showMessage = screenState::showMessage,
+                emailVerificationRequired = uiState.emailVerificationRequired
             )
             LaunchedEffect(Unit) {
                 hideSplashScreen()
@@ -66,7 +65,7 @@ fun MainScreen(
     messages.firstOrNull()?.let { displayMessage ->
         LaunchedEffect(messages) {
             screenState.showMessage(displayMessage)
-            onMessageShown(displayMessage.id)
+            viewModel.setMessageShown(displayMessage.id)
         }
     }
 }

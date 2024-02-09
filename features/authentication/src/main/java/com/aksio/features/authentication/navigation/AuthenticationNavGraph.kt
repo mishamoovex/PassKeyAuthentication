@@ -19,11 +19,16 @@ private sealed class AuthNavGraph(open val route: String) {
 
 fun NavGraphBuilder.navGraphAuthentication(
     navHostController: NavHostController,
+    emailVerificationRequired: Boolean,
     graphRoute: String,
     showMessage: (TextMessage) -> Unit
 ) {
     navigation(
-        startDestination = AuthNavGraph.EmailSignUp.route,
+        startDestination = if (emailVerificationRequired) {
+            AuthNavGraph.EmailVerification.route
+        } else {
+            AuthNavGraph.EmailSignUp.route
+        },
         route = graphRoute
     ) {
         composable(AuthNavGraph.Welcome.route) {
@@ -50,7 +55,7 @@ fun NavGraphBuilder.navGraphAuthentication(
             EmailSingInScreen()
         }
 
-        composable(AuthNavGraph.EmailVerification.route){
+        composable(AuthNavGraph.EmailVerification.route) {
             EmailVerificationScreen()
         }
     }
