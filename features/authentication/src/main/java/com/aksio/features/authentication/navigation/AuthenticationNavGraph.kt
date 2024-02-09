@@ -56,7 +56,14 @@ fun NavGraphBuilder.navGraphAuthentication(
         }
 
         composable(AuthNavGraph.EmailVerification.route) {
-            EmailVerificationScreen()
+            EmailVerificationScreen(
+                showMessage = showMessage,
+                toLongin = {
+                    navHostController.navigate(AuthNavGraph.EmailSignIn.route) {
+                        popUpTo(AuthNavGraph.EmailVerification.route) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }

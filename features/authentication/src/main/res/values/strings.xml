@@ -21,4 +21,10 @@
     <string name="text_validation_error_password_base_capitalized_letter">capitalized letter</string>
     <string name="text_validation_error_password_base_digit">digit</string>
     <string name="text_validation_error_password_confirmation">Passwords don\'t match</string>
+
+    <string name="email_verification_header">Verify your\nemail address</string>
+    <string name="email_verification_description">Check your email for the verification message. If you haven\'t received it, click "Resend email".</string>
+    <string name="email_verification_auth_btn">Go to Log in</string>
+    <string name="email_verification_resend_email_btn">Resend email</string>
+    <string name="email_verification_resend_timeout_text">Send again %s</string>
 </resources>

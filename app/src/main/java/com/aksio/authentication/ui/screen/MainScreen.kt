@@ -49,6 +49,7 @@ fun MainScreen(
                 modifier = Modifier
                     .padding(paddings)
                     .padding(
+                        top = 32.dp,
                         bottom = 24.dp,
                         start = 16.dp,
                         end = 16.dp
