@@ -5,5 +5,5 @@ import java.time.OffsetDateTime
 
 data class EmailVerificationUiState(
     val actionButtonState: ActionButtonState = ActionButtonState(),
-    val deadline: OffsetDateTime = OffsetDateTime.now().plusMinutes(1)
+    val deadline: OffsetDateTime = OffsetDateTime.now()
 )

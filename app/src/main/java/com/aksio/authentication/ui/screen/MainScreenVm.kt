@@ -24,7 +24,12 @@ class MainScreenVm @Inject constructor(
     init {
         executeAction {
             delay(500)
-            _uiState.update { it.copy(route = MainGraph.Authentication.route) }
+            _uiState.update {
+                it.copy(
+                    route = MainGraph.Authentication.route,
+                    emailVerificationRequired = true
+                )
+            }
         }
     }
 }

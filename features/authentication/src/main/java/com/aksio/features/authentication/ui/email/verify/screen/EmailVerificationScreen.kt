@@ -30,11 +30,12 @@ internal fun EmailVerificationScreen(
     showMessage: (TextMessage) -> Unit,
     toLongin: () -> Unit
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val messages by viewModel.displayMessages.collectAsStateWithLifecycle()
 
     ScreenContent(
         toLogin = toLongin,
-        state = EmailVerificationUiState()
+        state = uiState
     )
 
     messages.firstOrNull()?.let { message ->

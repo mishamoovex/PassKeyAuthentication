@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,9 +41,7 @@ internal fun Counter(
         mutableStateOf(deadlineDuration - nowDuration)
     }
 
-    val showActionBtn by remember {
-        derivedStateOf { remaining.isNegative() || remaining == Duration.ZERO }
-    }
+    val isActionButtonEnabled = remaining == Duration.ZERO || remaining.isNegative()
 
     Box(
         modifier = modifier
@@ -52,13 +49,13 @@ internal fun Counter(
             .height(56.dp)
             .clip(RoundedCornerShape(percent = 50))
             .clickable(
-                enabled = showActionBtn,
+                enabled = isActionButtonEnabled,
                 onClick = actionButtonState.onClicked
             ),
         contentAlignment = Alignment.Center
     ) {
 
-        if (showActionBtn) {
+        if (remaining == Duration.ZERO) {
             if (actionButtonState.isLoading) {
                 SpinningProgressIndicator(
                     modifier = Modifier.size(20.dp)

@@ -4,6 +4,10 @@ import com.aksio.core.data.db.db.dao.UserDao
 import com.aksio.core.data.db.db.models.UserEntity
 import com.aksio.core.data.firebase.auth.service.AuthenticationService
 import com.aksio.core.models.auth.RegistrationRequest
+import com.aksio.core.models.user.User
+import com.aksio.core.repository.authentication.mapper.asUser
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.time.Clock
 import java.time.OffsetDateTime
 import javax.inject.Inject
@@ -26,6 +30,12 @@ internal class AuthenticationRepositoryImpl @Inject constructor(
         userDao.insert(user)
     }
 
+    override suspend fun getCurrentUser(): User? =
+        userDao.getCurrentUser()?.asUser()
+
+    override fun observeCurrentUser(): Flow<User?> =
+        userDao.observeCurrentUser().map { entity -> entity?.asUser() }
+
     override suspend fun isAuthenticated(): Boolean {
         TODO("Not yet implemented")
     }
@@ -35,9 +45,14 @@ internal class AuthenticationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun sendVerificationEmail() {
+        val userId = userDao.getCurrentUser()
+            ?.id
+            ?: throw IllegalStateException("User is not authenticated")
+
         authenticationService.sendVerificationEmail()
+
         userDao.updateSentEmail(
-            userId = userDao.getUser().id,
+            userId = userId,
             sentAt = OffsetDateTime.now(clock)
         )
     }
