@@ -174,7 +174,7 @@ class EmailSignUpVm @Inject constructor(
                     email = state.emailState.value,
                     password = state.passwordState.value
                 )
-                authenticationRepository.registerUser(request)
+                authenticationRepository.register(request)
                 authenticationRepository.sendVerificationEmail()
                 setNavigationArgs(Any())
             }

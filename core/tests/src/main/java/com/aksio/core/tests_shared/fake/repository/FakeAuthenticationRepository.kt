@@ -21,7 +21,7 @@ class FakeAuthenticationRepository(
     private val isFailedRequest = AtomicBoolean(false)
     private val userProfile = MutableStateFlow<User?>(null)
 
-    override suspend fun registerUser(request: RegistrationRequest) = onSuccessfulRequest {
+    override suspend fun register(request: RegistrationRequest) = onSuccessfulRequest {
         val authProvider = when (request) {
             is RegistrationRequest.Google -> AuthenticationProvider.GOOGLE
             is RegistrationRequest.Password -> AuthenticationProvider.EMAIL

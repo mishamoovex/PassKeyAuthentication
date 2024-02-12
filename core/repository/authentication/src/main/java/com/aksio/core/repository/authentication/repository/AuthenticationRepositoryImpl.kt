@@ -14,7 +14,7 @@ internal class AuthenticationRepositoryImpl @Inject constructor(
     private val clock: Clock
 ) : AuthenticationRepository {
 
-    override suspend fun registerUser(request: RegistrationRequest) {
+    override suspend fun register(request: RegistrationRequest) {
         val authResponse = authenticationService.register(request)
         val creationTime = OffsetDateTime.now(clock)
         val user = UserEntity(
